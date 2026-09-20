@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ana's English exercises - Teacher Daniel</title>
+
+<style>
+    :root {
+        --navy: #263558;
+        --blue: #67a7d3;
+        --white: #ffffff;
+        --light: #f4f8fb;
+        --text: #263558;
+        --green: #2e9d62;
+        --red: #d9534f;
+        --gray: #6c757d;
+        --yellow: #f0ad4e;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #f4f8fb, #e9f3fa);
+        color: var(--text);
+        min-height: 100vh;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px 20px 60px;
+    }
+
+    header {
+        background: var(--navy);
+        color: white;
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(38, 53, 88, 0.15);
+    }
+
+    header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(25px, 5vw, 38px);
+    }
+
+    header p {
+        margin: 0;
+        color: #dbe9f3;
+        font-size: 16px;
+    }
+
+    .progress-area {
+        background: white;
+        padding: 18px 22px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 20px rgba(38, 53, 88, 0.08);
+    }
+
+    .progress-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .progress-bar {
+        height: 10px;
+        background: #e5edf3;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--blue);
+        transition: width 0.3s ease;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(38, 53, 88, 0.10);
+    }
+
+    .question-type {
+        display: inline-block;
+        background: #e4f2fb;
+        color: var(--navy);
+        font-weight: bold;
+        padding: 7px 12px;
+        border-radius: 30px;
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    .question-number {
+        color: var(--blue);
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .question {
+        font-size: 23px;
+        line-height: 1.5;
+        margin: 0 0 25px;
+    }
+
+    .instructions {
+        color: var(--gray);
+        margin-top: -12px;
+        margin-bottom: 22px;
+    }
+
+    .options {
+        display: grid;
+        gap: 12px;
+    }
+
+    .option {
+        border: 2px solid #dbe7ef;
+        background: white;
+        padding: 15px 17px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 17px;
+        color: var(--text);
+    }
+
+    .option:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+    }
+
+    .option.selected {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .option.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+    }
+
+    .option.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+    }
+
+    .text-answer {
+        width: 100%;
+        padding: 16px;
+        border: 2px solid #dbe7ef;
+        border-radius: 12px;
+        font-size: 18px;
+        color: var(--text);
+        outline: none;
+        transition: border 0.2s;
+    }
+
+    .text-answer:focus {
+        border-color: var(--blue);
+    }
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    .drag-sentence {
+        font-size: 22px;
+        line-height: 2;
+        margin: 20px 0;
+    }
+
+    .drop-zone {
+        display: inline-flex;
+        min-width: 150px;
+        min-height: 48px;
+        padding: 6px 14px;
+        margin: 0 6px;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed var(--blue);
+        border-radius: 10px;
+        background: #f4faff;
+        color: var(--gray);
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+
+    .drop-zone.drag-over {
+        background: #e4f2fb;
+        border-color: var(--navy);
+        transform: scale(1.03);
+    }
+
+    .drop-zone.filled {
+        border-style: solid;
+        background: #eaf5fc;
+        color: var(--navy);
+    }
+
+    .drag-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .drag-option {
+        padding: 13px 18px;
+        background: white;
+        border: 2px solid #dbe7ef;
+        border-radius: 12px;
+        cursor: grab;
+        font-size: 17px;
+        font-weight: bold;
+        user-select: none;
+        transition: all 0.2s ease;
+        touch-action: none;
+    }
+
+    .drag-option:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+        transform: translateY(-1px);
+    }
+
+    .drag-option:active {
+        cursor: grabbing;
+    }
+
+    .drag-option.dragging {
+        opacity: 0.5;
+    }
+
+    .drag-option.selected {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .drag-option.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+    }
+
+    .drag-option.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+    }
+
+    .drag-hint {
+        font-size: 14px;
+        color: var(--gray);
+        margin-top: 12px;
+    }
+
+    /* =====================================================
+       FEEDBACK
+    ===================================================== */
+
+    .feedback {
+        margin-top: 22px;
+        padding: 18px;
+        border-radius: 12px;
+        display: none;
+        line-height: 1.6;
+    }
+
+    .feedback.correct {
+        display: block;
+        background: #eaf8f0;
+        border-left: 5px solid var(--green);
+        color: #17613a;
+    }
+
+    .feedback.incorrect {
+        display: block;
+        background: #fff0ef;
+        border-left: 5px solid var(--red);
+        color: #8e2926;
+    }
+
+    .feedback strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .position-note {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 8px;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    button {
+        border: none;
+        border-radius: 12px;
+        padding: 14px 22px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.15s, opacity 0.15s;
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+    }
+
+    button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .btn-primary {
+        background: var(--navy);
+        color: white;
+    }
+
+    .btn-blue {
+        background: var(--blue);
+        color: white;
+    }
+
+    .btn-light {
+        background: #e9f2f8;
+        color: var(--navy);
+    }
+
+    .btn-green {
+        background: var(--green);
+        color: white;
+    }
+
+    .btn-red {
+        background: var(--red);
+        color: white;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    /* =====================================================
+       FINAL PAGE
+    ===================================================== */
+
+    .summary-header {
+        text-align: center;
+        padding: 10px 0 25px;
+    }
+
+    .score-circle {
+        width: 145px;
+        height: 145px;
+        border-radius: 50%;
+        background: var(--navy);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .score-circle .score {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .score-circle small {
+        color: #dbe9f3;
+    }
+
+    .summary-header h2 {
+        font-size: 30px;
+        margin: 10px 0;
+    }
+
+    .summary-header p {
+        color: var(--gray);
+    }
+
+    .summary-meta {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin: 20px 0;
+        color: var(--gray);
+        font-size: 14px;
+    }
+
+    .summary-meta strong {
+        color: var(--navy);
+    }
+
+    .summary-section {
+        margin-top: 30px;
+    }
+
+    .summary-section h3 {
+        border-bottom: 2px solid #e4edf3;
+        padding-bottom: 10px;
+    }
+
+    .summary-item {
+        padding: 17px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        border-left: 5px solid;
+        background: #f8fbfd;
+    }
+
+    .summary-item.correct {
+        border-color: var(--green);
+    }
+
+    .summary-item.incorrect {
+        border-color: var(--red);
+    }
+
+    .summary-item.skipped {
+        border-color: var(--gray);
+    }
+
+    .summary-question {
+        font-weight: bold;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    .summary-answer {
+        color: #526174;
+        line-height: 1.5;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .status.correct {
+        color: var(--green);
+    }
+
+    .status.incorrect {
+        color: var(--red);
+    }
+
+    .status.skipped {
+        color: var(--gray);
+    }
+
+    .final-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+    }
+
+    .start-screen {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .start-screen h2 {
+        font-size: 30px;
+    }
+
+    .start-screen p {
+        max-width: 700px;
+        margin: 15px auto 25px;
+        line-height: 1.7;
+        color: var(--gray);
+    }
+
+    .topic-box {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 30px;
+        background: #eaf5fc;
+        color: var(--navy);
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .connector-categories {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        max-width: 750px;
+        margin: 25px auto;
+    }
+
+    .category-box {
+        padding: 15px;
+        border-radius: 12px;
+        background: #f8fbfd;
+        border: 1px solid #e1ebf2;
+    }
+
+    .category-box strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .category-box span {
+        font-size: 14px;
+        color: var(--gray);
+    }
+
+    .print-header {
+        display: none;
+    }
+
+    @media (max-width: 650px) {
+
+        .app {
+            padding: 15px 12px 40px;
+        }
+
+        header {
+            padding: 23px;
+        }
+
+        .card {
+            padding: 22px;
+        }
+
+        .question {
+            font-size: 20px;
+        }
+
+        .drag-sentence {
+            font-size: 19px;
+        }
+
+        .drop-zone {
+            min-width: 120px;
+        }
+
+        .connector-categories {
+            grid-template-columns: 1fr;
+        }
+
+        .actions button,
+        .final-actions button {
+            width: 100%;
+        }
+    }
+
+    @media print {
+
+        body {
+            background: white;
+            color: #222;
+        }
+
+        .app {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        header,
+        .final-actions {
+            display: none !important;
+        }
+
+        .card,
+        .progress-area {
+            box-shadow: none;
+        }
+
+        .print-header {
+            display: block;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .print-header h1 {
+            margin: 0 0 6px;
+            font-size: 25px;
+        }
+
+        .print-header p {
+            margin: 0;
+            color: #666;
+        }
+
+        .summary-item {
+            break-inside: avoid;
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+        }
+
+        .score-circle .score {
+            font-size: 32px;
+        }
+
+        .summary-section {
+            break-inside: avoid;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+```
+<header>
+    <h1>Grammar Exercises</h1>
+    <p>Teacher Daniel</p>
+</header>
+
+<!-- START SCREEN -->
+
+<section id="startScreen" class="card start-screen">
+
+    <div class="topic-box">Connectors</div>
+
+    <h2>Ready to practice?</h2>
+
+    <p>
+        In this exercise, you will practice connectors used to express
+        <strong>contrast</strong>, <strong>addition</strong> and
+        <strong>result</strong> in Business English contexts.
+    </p>
+
+    <p>
+        There are <strong>36 questions</strong>: 10 multiple-choice,
+        10 fill-in-the-gaps, 10 unscramble-the-words and
+        6 drag-and-drop questions.
+    </p>
+
+    <button class="btn-primary" onclick="startExercise()">
+        Começar exercício
+    </button>
+
+</section>
+
+
+<!-- EXERCISE -->
+
+<section id="exerciseScreen" class="hidden">
+
+    <div class="progress-area">
+
+        <div class="progress-top">
+            <span id="progressText">Question 1 of 36</span>
+            <span id="scoreText">Score: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div id="questionType" class="question-type"></div>
+
+        <div id="questionNumber" class="question-number"></div>
+
+        <h2 id="questionText" class="question"></h2>
+
+        <div id="instructions" class="instructions"></div>
+
+        <div id="answerArea"></div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div class="actions">
+
+            <button
+                id="answerBtn"
+                class="btn-primary"
+                onclick="checkAnswer()">
+                Responder
+            </button>
+
+            <button
+                id="skipBtn"
+                class="btn-light"
+                onclick="skipQuestion()">
+                Pular
+            </button>
+
+            <button
+                id="retryBtn"
+                class="btn-red hidden"
+                onclick="retryCurrentQuestion()">
+                Tentar novamente
+            </button>
+
+            <button
+                id="nextBtn"
+                class="btn-blue hidden"
+                onclick="nextQuestion()">
+                Próxima pergunta
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section id="summaryScreen" class="hidden">
+
+    <div class="card">
+
+        <div class="print-header">
+            <h1>Ana's English Exercises</h1>
+            <p>Teacher Daniel · Business English · Connectors</p>
+        </div>
+
+        <div class="summary-header">
+
+            <div class="score-circle">
+                <span id="finalScore" class="score">0%</span>
+                <small>score</small>
+            </div>
+
+            <h2>Exercise completed!</h2>
+
+            <p>
+                Here is Ana's complete answer summary.
+            </p>
+
+            <div class="summary-meta">
+
+                <span>
+                    <strong>Topic:</strong> Connectors
+                </span>
+
+                <span>
+                    <strong>Questions:</strong> 36
+                </span>
+
+                <span>
+                    <strong>Date:</strong>
+                    <span id="summaryDate"></span>
+                </span>
+
+            </div>
+
+        </div>
+
+        <div id="summaryContent"></div>
+
+        <div class="final-actions">
+
+            <button
+                class="btn-primary"
+                onclick="restartExercise()">
+                Tentar novamente
+            </button>
+
+            <button
+                class="btn-green"
+                onclick="savePDF()">
+                Salvar como PDF
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+```
+
+</div>
+
+<script>
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const originalQuestions = [
+
+/* ================= MULTIPLE CHOICE ================= */
+
+{
+    type: "Multiple Choice",
+    category: "Contrast",
+    question: "_____ the project was completed on time, the team had to work several weekends.",
+    options: [
+        "Although",
+        "Also",
+        "Therefore",
+        "Besides"
+    ],
+    answer: "Although",
+    explanation: "Although introduces a contrast between two ideas."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Contrast",
+    question: "The product is expensive. _____, it offers excellent value for money.",
+    options: [
+        "However",
+        "Also",
+        "That's why",
+        "Besides"
+    ],
+    answer: "However",
+    explanation: "However is commonly used to introduce a contrasting idea, often at the beginning of a new sentence."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Contrast",
+    question: "_____ the company has a large budget, it cannot hire more employees this year.",
+    options: [
+        "While",
+        "Therefore",
+        "Also",
+        "As a result"
+    ],
+    answer: "While",
+    explanation: "While can introduce a contrast between two situations."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Addition",
+    question: "The new software is easy to use. _____, it is much faster than the previous system.",
+    options: [
+        "In addition",
+        "Although",
+        "Therefore",
+        "While"
+    ],
+    answer: "In addition",
+    explanation: "In addition adds another related piece of information."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Addition",
+    question: "The company provides health insurance. It _____ offers a transportation allowance.",
+    options: [
+        "also",
+        "however",
+        "therefore",
+        "although"
+    ],
+    answer: "also",
+    explanation: "Also is commonly placed before the main verb to add information."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Addition",
+    question: "_____ salary, employees receive a performance bonus every year.",
+    options: [
+        "Besides",
+        "However",
+        "Therefore",
+        "While"
+    ],
+    answer: "Besides",
+    explanation: "Besides can introduce an additional thing or reason."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Result",
+    question: "The supplier failed to deliver the materials. _____, production was delayed.",
+    options: [
+        "As a result",
+        "Although",
+        "Besides",
+        "Also"
+    ],
+    answer: "As a result",
+    explanation: "As a result introduces a consequence or result."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Result",
+    question: "The client was very satisfied. _____, she decided to renew the contract.",
+    options: [
+        "Therefore",
+        "While",
+        "Although",
+        "Besides"
+    ],
+    answer: "Therefore",
+    explanation: "Therefore introduces a logical result or conclusion."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Result",
+    question: "The meeting was cancelled. _____, we had to reschedule the presentation.",
+    options: [
+        "That's why",
+        "Although",
+        "Also",
+        "Besides"
+    ],
+    answer: "That's why",
+    explanation: "That's why introduces a result or explains the reason for a following situation."
+},
+
+{
+    type: "Multiple Choice",
+    category: "Addition",
+    question: "The manager is responsible for recruitment. _____, she supervises employee training.",
+    options: [
+        "Besides",
+        "However",
+        "Therefore",
+        "Although"
+    ],
+    answer: "Besides",
+    explanation: "Besides adds another responsibility or piece of information."
+},
+
+
+/* ================= FILL IN THE GAPS ================= */
+
+{
+    type: "Fill in the Gaps",
+    category: "Contrast",
+    question: "_____ the deadline was very tight, the team delivered the project on time.",
+    answer: "although",
+    acceptable: ["although"],
+    explanation: "Although introduces a contrasting situation."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Contrast",
+    question: "The proposal looks promising. _____, we need to check the costs carefully.",
+    answer: "however",
+    acceptable: ["however"],
+    explanation: "However introduces a contrasting idea and is commonly used at the beginning of a sentence."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Contrast",
+    question: "_____ the two companies are competitors, they sometimes work together.",
+    answer: "while",
+    acceptable: ["while"],
+    explanation: "While can connect two contrasting situations."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Addition",
+    question: "The company reduced its costs. _____, it improved its customer service.",
+    answer: "in addition",
+    acceptable: ["in addition"],
+    explanation: "In addition introduces another related fact or idea."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Addition",
+    question: "The manager _____ attends international conferences every year.",
+    answer: "also",
+    acceptable: ["also"],
+    explanation: "Also is normally placed before the main verb."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Addition",
+    question: "_____ the monthly salary, employees receive a meal allowance.",
+    answer: "besides",
+    acceptable: ["besides"],
+    explanation: "Besides can be used before a noun phrase to add another thing."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Result",
+    question: "The company invested heavily in training. _____, employee performance improved.",
+    answer: "as a result",
+    acceptable: ["as a result"],
+    explanation: "As a result introduces the consequence of a previous action."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Result",
+    question: "The client rejected the proposal. _____, we need to develop a new solution.",
+    answer: "therefore",
+    acceptable: ["therefore"],
+    explanation: "Therefore introduces a logical consequence."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Result",
+    question: "The team missed the deadline. _____, the launch was postponed.",
+    answer: "that's why",
+    acceptable: [
+        "that's why",
+        "thats why"
+    ],
+    explanation: "That's why introduces the result or consequence of a previous situation."
+},
+
+{
+    type: "Fill in the Gaps",
+    category: "Addition",
+    question: "The new office is larger. It is _____ closer to the city center.",
+    answer: "also",
+    acceptable: ["also"],
+    explanation: "Also is commonly placed before an adjective or main verb depending on the sentence structure."
+},
+
+
+/* ================= UNSCRAMBLE ================= */
+
+{
+    type: "Unscramble the Words",
+    category: "Contrast",
+    question: "although / the project / was difficult / the team / completed / it / successfully",
+    answer: "Although the project was difficult, the team completed it successfully.",
+    explanation: "Although introduces a contrasting subordinate clause."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Contrast",
+    question: "the product / is expensive / however / it / is / very reliable",
+    answer: "The product is expensive. However, it is very reliable.",
+    explanation: "However commonly introduces a contrasting sentence or clause."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Contrast",
+    question: "while / the first team / focuses / on sales / the second team / focuses / on customer service",
+    answer: "While the first team focuses on sales, the second team focuses on customer service.",
+    explanation: "While can contrast two situations or actions."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Addition",
+    question: "the company / offers / flexible hours / in addition / employees / can / work remotely",
+    answer: "The company offers flexible hours. In addition, employees can work remotely.",
+    explanation: "In addition adds another related idea."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Addition",
+    question: "the manager / also / attends / weekly meetings",
+    answer: "The manager also attends weekly meetings.",
+    explanation: "Also normally appears before the main verb."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Addition",
+    question: "besides / the salary / employees / receive / a yearly bonus",
+    answer: "Besides the salary, employees receive a yearly bonus.",
+    explanation: "Besides can introduce an additional noun or noun phrase."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Result",
+    question: "the supplier / increased / its prices / as a result / our costs / increased",
+    answer: "The supplier increased its prices. As a result, our costs increased.",
+    explanation: "As a result introduces the consequence of a previous situation."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Result",
+    question: "the company / improved / its website / therefore / online sales / increased",
+    answer: "The company improved its website. Therefore, online sales increased.",
+    explanation: "Therefore introduces a logical result."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Result",
+    question: "the meeting / was cancelled / that's why / we / changed / the schedule",
+    answer: "The meeting was cancelled. That's why we changed the schedule.",
+    explanation: "That's why introduces the result of a previous situation."
+},
+
+{
+    type: "Unscramble the Words",
+    category: "Addition",
+    question: "the company / provides / training / besides / employees / receive / coaching",
+    answer: "The company provides training. Besides, employees receive coaching.",
+    explanation: "Besides can add another related idea, especially in conversational or semi-formal English."
+},
+
+
+/* ================= DRAG & DROP ================= */
+
+{
+    type: "Drag & Drop",
+    category: "Contrast",
+    question: "Choose the connector that normally goes at the beginning of a subordinate clause.",
+    sentenceBefore: "",
+    sentenceAfter: "the project was expensive, the company decided to continue.",
+    options: [
+        "Although",
+        "However",
+        "Also"
+    ],
+    answer: "Although",
+    explanation: "Although normally introduces a subordinate clause and is followed by a subject + verb.",
+    positionExplanation: "<strong>Although</strong> normally appears at the beginning of the subordinate clause: <em>Although + subject + verb</em>."
+},
+
+{
+    type: "Drag & Drop",
+    category: "Contrast",
+    question: "Choose the connector that normally starts a new contrasting sentence.",
+    sentenceBefore: "The proposal is attractive.",
+    sentenceAfter: "we need to consider the risks.",
+    options: [
+        "However",
+        "Although",
+        "While"
+    ],
+    answer: "However",
+    explanation: "However commonly introduces a contrasting sentence or independent clause.",
+    positionExplanation: "<strong>However</strong> is commonly used at the beginning of a new sentence, usually followed by a comma: <em>However, + sentence</em>."
+},
+
+{
+    type: "Drag & Drop",
+    category: "Addition",
+    question: "Choose the connector that normally goes before the main verb.",
+    sentenceBefore: "The manager",
+    sentenceAfter: "attends international conferences.",
+    options: [
+        "also",
+        "in addition",
+        "besides"
+    ],
+    answer: "also",
+    explanation: "Also is commonly placed before the main verb in affirmative sentences.",
+    positionExplanation: "<strong>Also</strong> normally appears before the main verb: <em>The manager also attends...</em>"
+},
+
+{
+    type: "Drag & Drop",
+    category: "Addition",
+    question: "Choose the connector that normally begins a new sentence to add information.",
+    sentenceBefore: "The company improved its salaries.",
+    sentenceAfter: "it introduced a new benefits package.",
+    options: [
+        "In addition",
+        "Also",
+        "Besides"
+    ],
+    answer: "In addition",
+    explanation: "In addition commonly begins a new sentence when adding another point.",
+    positionExplanation: "<strong>In addition</strong> commonly appears at the beginning of a new sentence, followed by a comma: <em>In addition, + sentence</em>."
+},
+
+{
+    type: "Drag & Drop",
+    category: "Result",
+    question: "Choose the connector that normally begins a new sentence to introduce a result.",
+    sentenceBefore: "The company invested in automation.",
+    sentenceAfter: "production became more efficient.",
+    options: [
+        "As a result",
+        "Therefore",
+        "That's why"
+    ],
+    answer: "As a result",
+    explanation: "As a result commonly introduces a consequence in a new sentence.",
+    positionExplanation: "<strong>As a result</strong> commonly appears at the beginning of a sentence, followed by a comma: <em>As a result, + sentence</em>."
+},
+
+{
+    type: "Drag & Drop",
+    category: "Result",
+    question: "Choose the connector that normally appears before the result clause after a reason.",
+    sentenceBefore: "The client was extremely satisfied;",
+    sentenceAfter: "she renewed the contract.",
+    options: [
+        "that's why",
+        "therefore",
+        "as a result"
+    ],
+    answer: "that's why",
+    explanation: "That's why directly connects a reason with its result.",
+    positionExplanation: "<strong>That's why</strong> commonly appears between the reason and the result: <em>Reason + that's why + result.</em>"
+}
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+let answered = false;
+
+let draggedConnector = null;
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
+
+function shuffleArray(array) {
+
+    const copy = [...array];
+
+    for (let i = copy.length - 1; i > 0; i--) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [copy[i], copy[j]] =
+            [copy[j], copy[i]];
+    }
+
+    return copy;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startExercise() {
+
+    currentQuestion = 0;
+    score = 0;
+    answers = [];
+    answered = false;
+
+    questions =
+        shuffleArray(originalQuestions)
+            .map(q => {
+
+                const copy = {...q};
+
+                if (copy.options) {
+
+                    copy.options =
+                        shuffleArray(
+                            copy.options
+                        );
+                }
+
+                return copy;
+            });
+
+    document.getElementById("startScreen")
+        .classList.add("hidden");
+
+    document.getElementById("summaryScreen")
+        .classList.add("hidden");
+
+    document.getElementById("exerciseScreen")
+        .classList.remove("hidden");
+
+    loadQuestion();
+}
+
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
+
+function loadQuestion() {
+
+    answered = false;
+
+    draggedConnector = null;
+
+    const q =
+        questions[currentQuestion];
+
+    document.getElementById("questionType")
+        .textContent = q.type;
+
+    document.getElementById("questionNumber")
+        .textContent =
+        `Question ${currentQuestion + 1}`;
+
+    document.getElementById("questionText")
+        .textContent = q.question;
+
+    document.getElementById("progressText")
+        .textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("scoreText")
+        .textContent =
+        `Score: ${score}`;
+
+    const progress =
+        (currentQuestion / questions.length) * 100;
+
+    document.getElementById("progressFill")
+        .style.width =
+        `${progress}%`;
+
+    const instructions =
+        document.getElementById("instructions");
+
+    const answerArea =
+        document.getElementById("answerArea");
+
+    const feedback =
+        document.getElementById("feedback");
+
+    feedback.className = "feedback";
+    feedback.innerHTML = "";
+
+    answerArea.innerHTML = "";
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+    ===================================================== */
+
+    if (q.type === "Multiple Choice") {
+
+        instructions.textContent =
+            "Choose the correct connector.";
+
+        const options =
+            document.createElement("div");
+
+        options.className = "options";
+
+        q.options.forEach(
+            (option, index) => {
+
+                const button =
+                    document.createElement("div");
+
+                button.className =
+                    "option";
+
+                button.textContent =
+                    `${String.fromCharCode(65 + index)}. ${option}`;
+
+                button.dataset.value =
+                    option;
+
+                button.onclick =
+                    function() {
+
+                        if (answered) return;
+
+                        document.querySelectorAll(
+                            ".option"
+                        ).forEach(el =>
+                            el.classList.remove(
+                                "selected"
+                            )
+                        );
+
+                        button.classList.add(
+                            "selected"
+                        );
+                    };
+
+                options.appendChild(button);
+            }
+        );
+
+        answerArea.appendChild(options);
+    }
+
+
+    /* =====================================================
+       FILL IN THE GAPS
+    ===================================================== */
+
+    else if (q.type === "Fill in the Gaps") {
+
+        instructions.textContent =
+            "Type the correct connector.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type your answer here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       UNSCRAMBLE
+    ===================================================== */
+
+    else if (
+        q.type === "Unscramble the Words"
+    ) {
+
+        instructions.textContent =
+            "Rearrange the words to create a correct sentence.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type the complete sentence here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    else if (
+        q.type === "Drag & Drop"
+    ) {
+
+        instructions.textContent =
+            "Drag the correct connector into the blank.";
+
+
+        /* ---------- SENTENCE ---------- */
+
+        const sentence =
+            document.createElement("div");
+
+        sentence.className =
+            "drag-sentence";
+
+
+        if (q.sentenceBefore) {
+
+            sentence.appendChild(
+                document.createTextNode(
+                    q.sentenceBefore + " "
+                )
+            );
+        }
+
+
+        /* ---------- DROP ZONE ---------- */
+
+        const dropZone =
+            document.createElement("span");
+
+        dropZone.className =
+            "drop-zone";
+
+        dropZone.id =
+            "dropZone";
+
+        dropZone.textContent =
+            "Drop here";
+
+        sentence.appendChild(
+            dropZone
+        );
+
+
+        if (q.sentenceAfter) {
+
+            sentence.appendChild(
+                document.createTextNode(
+                    " " + q.sentenceAfter
+                )
+            );
+        }
+
+
+        answerArea.appendChild(
+            sentence
+        );
+
+
+        /* ---------- OPTIONS ---------- */
+
+        const dragOptions =
+            document.createElement("div");
+
+        dragOptions.className =
+            "drag-options";
+
+
+        q.options.forEach(
+            option => {
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "drag-option";
+
+                item.textContent =
+                    option;
+
+                item.dataset.value =
+                    option;
+
+                item.setAttribute(
+                    "draggable",
+                    "true"
+                );
+
+
+                /* =========================
+                   DRAG START
+                ========================= */
+
+                item.addEventListener(
+                    "dragstart",
+                    function(event) {
+
+                        if (answered) {
+
+                            event.preventDefault();
+
+                            return;
+                        }
+
+                        draggedConnector =
+                            option;
+
+                        event.dataTransfer.effectAllowed =
+                            "copy";
+
+                        event.dataTransfer.setData(
+                            "text/plain",
+                            option
+                        );
+
+                        item.classList.add(
+                            "dragging"
+                        );
+                    }
+                );
+
+
+                /* =========================
+                   DRAG END
+                ========================= */
+
+                item.addEventListener(
+                    "dragend",
+                    function() {
+
+                        item.classList.remove(
+                            "dragging"
+                        );
+
+                        draggedConnector =
+                            null;
+
+                        dropZone.classList.remove(
+                            "drag-over"
+                        );
+                    }
+                );
+
+
+                /*
+                   IMPORTANT:
+                   There is NO click event here.
+                   The option must be dragged.
+                */
+
+
+                dragOptions.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            dragOptions
+        );
+
+
+        /* ---------- HINT ---------- */
+
+        const hint =
+            document.createElement("div");
+
+        hint.className =
+            "drag-hint";
+
+        hint.textContent =
+            "Drag one of the connectors into the blank.";
+
+        answerArea.appendChild(
+            hint
+        );
+
+
+        /* =========================
+           DRAG OVER
+        ========================= */
+
+        dropZone.addEventListener(
+            "dragover",
+            function(event) {
+
+                if (answered) return;
+
+                event.preventDefault();
+
+                event.dataTransfer.dropEffect =
+                    "copy";
+
+                dropZone.classList.add(
+                    "drag-over"
+                );
+            }
+        );
+
+
+        /* =========================
+           DRAG LEAVE
+        ========================= */
+
+        dropZone.addEventListener(
+            "dragleave",
+            function() {
+
+                dropZone.classList.remove(
+                    "drag-over"
+                );
+            }
+        );
+
+
+        /* =========================
+           DROP
+        ========================= */
+
+        dropZone.addEventListener(
+            "drop",
+            function(event) {
+
+                if (answered) return;
+
+                event.preventDefault();
+
+                dropZone.classList.remove(
+                    "drag-over"
+                );
+
+                const value =
+                    event.dataTransfer.getData(
+                        "text/plain"
+                    ) ||
+                    draggedConnector;
+
+                if (!value) return;
+
+                placeConnector(value);
+            }
+        );
+    }
+
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    document.getElementById("answerBtn")
+        .classList.remove("hidden");
+
+    document.getElementById("skipBtn")
+        .classList.remove("hidden");
+
+    document.getElementById("retryBtn")
+        .classList.add("hidden");
+
+    document.getElementById("nextBtn")
+        .classList.add("hidden");
+
+    document.getElementById("nextBtn")
+        .textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+}
+
+
+/* =========================================================
+   PLACE CONNECTOR
+========================================================= */
+
+function placeConnector(value) {
+
+    if (!value || answered) return;
+
+    const dropZone =
+        document.getElementById("dropZone");
+
+    if (!dropZone) return;
+
+    dropZone.textContent =
+        value;
+
+    dropZone.classList.add(
+        "filled"
+    );
+
+
+    document.querySelectorAll(
+        ".drag-option"
+    ).forEach(option => {
+
+        option.classList.remove(
+            "selected"
+        );
+
+        if (
+            option.dataset.value ===
+            value
+        ) {
+
+            option.classList.add(
+                "selected"
+            );
+        }
+    });
+}
+
+
+/* =========================================================
+   CHECK ANSWER
+========================================================= */
+
+function checkAnswer() {
+
+    if (answered) return;
+
+    const q =
+        questions[currentQuestion];
+
+    let userAnswer = "";
+    let isCorrect = false;
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if (q.type === "Multiple Choice") {
+
+        const selected =
+            document.querySelector(
+                ".option.selected"
+            );
+
+        if (!selected) {
+
+            alert(
+                "Please choose an answer before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            selected.dataset.value;
+
+        isCorrect =
+            normalizeText(userAnswer) ===
+            normalizeText(q.answer);
+    }
+
+
+    /* ================= TEXT ANSWERS ================= */
+
+    else if (
+        q.type === "Fill in the Gaps" ||
+        q.type === "Unscramble the Words"
+    ) {
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+        if (
+            !input ||
+            !input.value.trim()
+        ) {
+
+            alert(
+                "Please type an answer before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            input.value.trim();
+
+
+        if (
+            q.type ===
+            "Fill in the Gaps"
+        ) {
+
+            const normalized =
+                normalizeText(
+                    userAnswer
+                );
+
+            isCorrect =
+                q.acceptable.some(
+                    answer =>
+                        normalizeText(answer) ===
+                        normalized
+                );
+
+        } else {
+
+            isCorrect =
+                checkUnscramble(
+                    userAnswer,
+                    q
+                );
+        }
+    }
+
+
+    /* ================= DRAG & DROP ================= */
+
+    else if (
+        q.type === "Drag & Drop"
+    ) {
+
+        const dropZone =
+            document.getElementById(
+                "dropZone"
+            );
+
+        if (
+            !dropZone ||
+            !dropZone.classList.contains(
+                "filled"
+            )
+        ) {
+
+            alert(
+                "Please drag a connector into the blank before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            dropZone.textContent.trim();
+
+        isCorrect =
+            normalizeText(userAnswer) ===
+            normalizeText(q.answer);
+    }
+
+
+    answered = true;
+
+
+    /* =====================================================
+       POINT CONTROL
+    ===================================================== */
+
+    const previous =
+        answers[currentQuestion];
+
+    if (
+        isCorrect &&
+        (!previous ||
+        !previous.pointAwarded)
+    ) {
+
+        score++;
+    }
+
+
+    answers[currentQuestion] = {
+
+        userAnswer:
+            userAnswer,
+
+        correct:
+            isCorrect,
+
+        skipped:
+            false,
+
+        pointAwarded:
+            (
+                isCorrect ||
+                (
+                    previous &&
+                    previous.pointAwarded
+                )
+            )
+    };
+
+
+    showFeedback(
+        isCorrect,
+        q
+    );
+
+
+    document.getElementById(
+        "answerBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "skipBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "retryBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+
+    updateScoreDisplay();
+}
+
+
+/* =========================================================
+   UNSCRAMBLE CHECK
+========================================================= */
+
+function checkUnscramble(
+    userAnswer,
+    q
+) {
+
+    const clean =
+        normalizeSentence(
+            userAnswer
+        );
+
+    const expected =
+        normalizeSentence(
+            q.answer
+        );
+
+    return clean === expected;
+}
+
+
+function normalizeSentence(text) {
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[.,!?;:]/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+/* =========================================================
+   NORMALIZE
+========================================================= */
+
+function normalizeText(text) {
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[.,!?;:]/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+function showFeedback(
+    isCorrect,
+    q
+) {
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    if (isCorrect) {
+
+        feedback.className =
+            "feedback correct";
+
+        feedback.innerHTML = `
+
+            <strong>✓ Correct!</strong>
+
+            ${q.explanation}
+
+            ${
+                q.positionExplanation
+                    ? `
+                    <div class="position-note">
+                        ${q.positionExplanation}
+                    </div>
+                    `
+                    : ""
+            }
+
+        `;
+
+    } else {
+
+        feedback.className =
+            "feedback incorrect";
+
+        feedback.innerHTML = `
+
+            <strong>✗ Incorrect.</strong>
+
+            ${q.explanation}
+
+            <br>
+
+            <strong>Correct answer:</strong>
+            ${escapeHTML(q.answer)}
+
+            ${
+                q.positionExplanation
+                    ? `
+                    <div class="position-note">
+                        ${q.positionExplanation}
+                    </div>
+                    `
+                    : ""
+            }
+
+        `;
+    }
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if (
+        q.type === "Multiple Choice"
+    ) {
+
+        document.querySelectorAll(
+            ".option"
+        ).forEach(option => {
+
+            if (
+                normalizeText(
+                    option.dataset.value
+                ) ===
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "correct"
+                );
+            }
+
+            if (
+                option.classList.contains(
+                    "selected"
+                ) &&
+                normalizeText(
+                    option.dataset.value
+                ) !==
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "incorrect"
+                );
+            }
+        });
+    }
+
+
+    /* ================= DRAG & DROP ================= */
+
+    if (
+        q.type === "Drag & Drop"
+    ) {
+
+        document.querySelectorAll(
+            ".drag-option"
+        ).forEach(option => {
+
+            if (
+                normalizeText(
+                    option.dataset.value
+                ) ===
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "correct"
+                );
+            }
+
+            if (
+                option.classList.contains(
+                    "selected"
+                ) &&
+                normalizeText(
+                    option.dataset.value
+                ) !==
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "incorrect"
+                );
+            }
+        });
+    }
+}
+
+
+/* =========================================================
+   SKIP
+========================================================= */
+
+function skipQuestion() {
+
+    if (answered) return;
+
+    const q =
+        questions[currentQuestion];
+
+    answered = true;
+
+    answers[currentQuestion] = {
+
+        userAnswer:
+            "Pulo",
+
+        correct:
+            false,
+
+        skipped:
+            true,
+
+        pointAwarded:
+            false
+    };
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+    feedback.className =
+        "feedback incorrect";
+
+    feedback.innerHTML = `
+
+        <strong>Question skipped.</strong>
+
+        This question counts as incorrect in the final score.
+
+        <br><br>
+
+        <strong>Correct answer:</strong>
+        ${escapeHTML(q.answer)}
+
+        <br><br>
+
+        ${q.explanation}
+
+        ${
+            q.positionExplanation
+                ? `
+                <div class="position-note">
+                    ${q.positionExplanation}
+                </div>
+                `
+                : ""
+        }
+
+    `;
+
+
+    document.getElementById(
+        "answerBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "skipBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "retryBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+}
+
+
+/* =========================================================
+   RETRY
+========================================================= */
+
+function retryCurrentQuestion() {
+
+    const previousAnswer =
+        answers[currentQuestion];
+
+    loadQuestion();
+
+    /*
+       If the question was previously correct,
+       the point remains in the score.
+    */
+
+    if (
+        previousAnswer &&
+        previousAnswer.pointAwarded
+    ) {
+
+        updateScoreDisplay();
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+========================================================= */
+
+function nextQuestion() {
+
+    if (!answered) {
+        return;
+    }
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        currentQuestion++;
+
+        loadQuestion();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    } else {
+
+        showSummary();
+    }
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+function updateScoreDisplay() {
+
+    document.getElementById(
+        "scoreText"
+    ).textContent =
+        `Score: ${score}`;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function showSummary() {
+
+    document.getElementById(
+        "exerciseScreen"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "summaryScreen"
+    ).classList.remove("hidden");
+
+
+    const percentage =
+        Math.round(
+            (score /
+            questions.length) *
+            100
+        );
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        `${percentage}%`;
+
+
+    const now =
+        new Date();
+
+    document.getElementById(
+        "summaryDate"
+    ).textContent =
+        now.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+
+    const summaryContent =
+        document.getElementById(
+            "summaryContent"
+        );
+
+    summaryContent.innerHTML = "";
+
+
+    let currentSection = "";
+
+
+    questions.forEach(
+        (q, index) => {
+
+            const result =
+                answers[index] || {
+
+                    userAnswer:
+                        "Pulo",
+
+                    correct:
+                        false,
+
+                    skipped:
+                        true
+                };
+
+
+            if (
+                q.type !==
+                currentSection
+            ) {
+
+                currentSection =
+                    q.type;
+
+                const section =
+                    document.createElement(
+                        "div"
+                    );
+
+                section.className =
+                    "summary-section";
+
+                const heading =
+                    document.createElement(
+                        "h3"
+                    );
+
+                heading.textContent =
+                    q.type;
+
+                section.appendChild(
+                    heading
+                );
+
+                summaryContent.appendChild(
+                    section
+                );
+            }
+
+
+            const section =
+                summaryContent.lastElementChild;
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            let statusClass =
+                "incorrect";
+
+            let statusText =
+                "Incorrect";
+
+
+            if (
+                result.skipped
+            ) {
+
+                statusClass =
+                    "skipped";
+
+                statusText =
+                    "Pulo";
+
+            } else if (
+                result.correct
+            ) {
+
+                statusClass =
+                    "correct";
+
+                statusText =
+                    "Correct";
+            }
+
+
+            item.className =
+                `summary-item ${statusClass}`;
+
+
+            const displayedUserAnswer =
+                result.skipped
+                    ? "Pulo"
+                    : (
+                        result.userAnswer ||
+                        "—"
+                    );
+
+
+            item.innerHTML = `
+
+                <div class="summary-question">
+                    ${index + 1}. ${escapeHTML(q.question)}
+                </div>
+
+                <div class="summary-answer">
+
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                    <br>
+
+                    <strong>Your answer:</strong>
+                    ${escapeHTML(displayedUserAnswer)}
+
+                    <br>
+
+                    <strong>Correct answer:</strong>
+                    ${escapeHTML(q.answer)}
+
+                </div>
+
+            `;
+
+
+            section.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+/* =========================================================
+   RESTART
+========================================================= */
+
+function restartExercise() {
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+    answered = false;
+
+    draggedConnector = null;
+
+    questions =
+        shuffleArray(
+            originalQuestions
+        ).map(q => {
+
+            const copy =
+                {...q};
+
+            if (copy.options) {
+
+                copy.options =
+                    shuffleArray(
+                        copy.options
+                    );
+            }
+
+            return copy;
+        });
+
+
+    document.getElementById(
+        "summaryScreen"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "exerciseScreen"
+    ).classList.remove("hidden");
+
+    loadQuestion();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   SAVE AS PDF
+========================================================= */
+
+function savePDF() {
+
+    window.print();
+}
+
+</script>
+
+</body>
+</html>
