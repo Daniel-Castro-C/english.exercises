@@ -1,0 +1,3437 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future continuous - D.C English Classes</title>
+
+<style>
+    :root {
+        --navy: #263558;
+        --blue: #67a7d3;
+        --white: #ffffff;
+        --light: #f4f8fb;
+        --text: #263558;
+        --green: #2e9d62;
+        --red: #d9534f;
+        --gray: #6c757d;
+        --yellow: #f0ad4e;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #f4f8fb, #e9f3fa);
+        color: var(--text);
+        min-height: 100vh;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px 20px 60px;
+    }
+
+    header {
+        background: var(--navy);
+        color: white;
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(38, 53, 88, 0.15);
+    }
+
+    header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(25px, 5vw, 38px);
+    }
+
+    header p {
+        margin: 0;
+        color: #dbe9f3;
+        font-size: 16px;
+    }
+
+    .progress-area {
+        background: white;
+        padding: 18px 22px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 20px rgba(38, 53, 88, 0.08);
+    }
+
+    .progress-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .progress-bar {
+        height: 10px;
+        background: #e5edf3;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--blue);
+        transition: width 0.3s ease;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(38, 53, 88, 0.10);
+    }
+
+    .question-type {
+        display: inline-block;
+        background: #e4f2fb;
+        color: var(--navy);
+        font-weight: bold;
+        padding: 7px 12px;
+        border-radius: 30px;
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    .question-number {
+        color: var(--blue);
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .question {
+        font-size: 23px;
+        line-height: 1.5;
+        margin: 0 0 25px;
+    }
+
+    .instructions {
+        color: var(--gray);
+        margin-top: -12px;
+        margin-bottom: 22px;
+    }
+
+    .options {
+        display: grid;
+        gap: 12px;
+    }
+
+    .option {
+        border: 2px solid #dbe7ef;
+        background: white;
+        padding: 15px 17px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 17px;
+        color: var(--text);
+    }
+
+    .option:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+    }
+
+    .option.selected {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .option.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+    }
+
+    .option.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+    }
+
+    .text-answer {
+        width: 100%;
+        padding: 16px;
+        border: 2px solid #dbe7ef;
+        border-radius: 12px;
+        font-size: 18px;
+        color: var(--text);
+        outline: none;
+        transition: border 0.2s;
+    }
+
+    .text-answer:focus {
+        border-color: var(--blue);
+    }
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    .drag-sentence {
+        font-size: 22px;
+        line-height: 2;
+        margin: 20px 0;
+    }
+
+    .drop-zone {
+        display: inline-flex;
+        min-width: 150px;
+        min-height: 48px;
+        padding: 6px 14px;
+        margin: 0 6px;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed var(--blue);
+        border-radius: 10px;
+        background: #f4faff;
+        color: var(--gray);
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+
+    .drop-zone.drag-over {
+        background: #e4f2fb;
+        border-color: var(--navy);
+        transform: scale(1.03);
+    }
+
+    .drop-zone.filled {
+        border-style: solid;
+        background: #eaf5fc;
+        color: var(--navy);
+    }
+
+    .drag-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .drag-option {
+        padding: 13px 18px;
+        background: white;
+        border: 2px solid #dbe7ef;
+        border-radius: 12px;
+        cursor: grab;
+        font-size: 17px;
+        font-weight: bold;
+        user-select: none;
+        transition: all 0.2s ease;
+        touch-action: none;
+    }
+
+    .drag-option:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+        transform: translateY(-1px);
+    }
+
+    .drag-option:active {
+        cursor: grabbing;
+    }
+
+    .drag-option.dragging {
+        opacity: 0.5;
+    }
+
+    .drag-option.selected {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .drag-option.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+    }
+
+    .drag-option.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+    }
+
+    .drag-hint {
+        font-size: 14px;
+        color: var(--gray);
+        margin-top: 12px;
+    }
+
+    /* =====================================================
+       MATCHING
+    ===================================================== */
+
+    .matching-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .match-column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .match-item {
+        border: 2px solid #dbe7ef;
+        background: white;
+        padding: 14px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 16px;
+        color: var(--text);
+        text-align: left;
+        font-family: inherit;
+    }
+
+    .match-item:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+    }
+
+    .match-item.selected {
+        border-color: var(--navy);
+        background: #eaf5fc;
+        box-shadow: 0 0 0 2px var(--navy) inset;
+    }
+
+    .match-item.paired {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .match-item.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+        cursor: default;
+    }
+
+    .match-item.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+        cursor: default;
+    }
+
+    /* =====================================================
+       FEEDBACK
+    ===================================================== */
+
+    .feedback {
+        margin-top: 22px;
+        padding: 18px;
+        border-radius: 12px;
+        display: none;
+        line-height: 1.6;
+    }
+
+    .feedback.correct {
+        display: block;
+        background: #eaf8f0;
+        border-left: 5px solid var(--green);
+        color: #17613a;
+    }
+
+    .feedback.incorrect {
+        display: block;
+        background: #fff0ef;
+        border-left: 5px solid var(--red);
+        color: #8e2926;
+    }
+
+    .feedback strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .position-note {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 8px;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    button {
+        border: none;
+        border-radius: 12px;
+        padding: 14px 22px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.15s, opacity 0.15s;
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+    }
+
+    button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .btn-primary {
+        background: var(--navy);
+        color: white;
+    }
+
+    .btn-blue {
+        background: var(--blue);
+        color: white;
+    }
+
+    .btn-light {
+        background: #e9f2f8;
+        color: var(--navy);
+    }
+
+    .btn-green {
+        background: var(--green);
+        color: white;
+    }
+
+    .btn-red {
+        background: var(--red);
+        color: white;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    /* =====================================================
+       FINAL PAGE
+    ===================================================== */
+
+    .summary-header {
+        text-align: center;
+        padding: 10px 0 25px;
+    }
+
+    .score-circle {
+        width: 145px;
+        height: 145px;
+        border-radius: 50%;
+        background: var(--navy);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .score-circle .score {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .score-circle small {
+        color: #dbe9f3;
+    }
+
+    .summary-header h2 {
+        font-size: 30px;
+        margin: 10px 0;
+    }
+
+    .summary-header p {
+        color: var(--gray);
+    }
+
+    .summary-meta {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin: 20px 0;
+        color: var(--gray);
+        font-size: 14px;
+    }
+
+    .summary-meta strong {
+        color: var(--navy);
+    }
+
+    .summary-section {
+        margin-top: 30px;
+    }
+
+    .summary-section h3 {
+        border-bottom: 2px solid #e4edf3;
+        padding-bottom: 10px;
+    }
+
+    .summary-item {
+        padding: 17px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        border-left: 5px solid;
+        background: #f8fbfd;
+    }
+
+    .summary-item.correct {
+        border-color: var(--green);
+    }
+
+    .summary-item.incorrect {
+        border-color: var(--red);
+    }
+
+    .summary-item.skipped {
+        border-color: var(--gray);
+    }
+
+    .summary-question {
+        font-weight: bold;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    .summary-answer {
+        color: #526174;
+        line-height: 1.5;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .status.correct {
+        color: var(--green);
+    }
+
+    .status.incorrect {
+        color: var(--red);
+    }
+
+    .status.skipped {
+        color: var(--gray);
+    }
+
+    .final-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+    }
+
+    .start-screen {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .start-screen h2 {
+        font-size: 30px;
+    }
+
+    .start-screen p {
+        max-width: 700px;
+        margin: 15px auto 25px;
+        line-height: 1.7;
+        color: var(--gray);
+    }
+
+    .topic-box {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 30px;
+        background: #eaf5fc;
+        color: var(--navy);
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .connector-categories {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        max-width: 750px;
+        margin: 25px auto;
+    }
+
+    .category-box {
+        padding: 15px;
+        border-radius: 12px;
+        background: #f8fbfd;
+        border: 1px solid #e1ebf2;
+    }
+
+    .category-box strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .category-box span {
+        font-size: 14px;
+        color: var(--gray);
+    }
+
+    .print-header {
+        display: none;
+    }
+
+    @media (max-width: 650px) {
+
+        .app {
+            padding: 15px 12px 40px;
+        }
+
+        header {
+            padding: 23px;
+        }
+
+        .card {
+            padding: 22px;
+        }
+
+        .question {
+            font-size: 20px;
+        }
+
+        .drag-sentence {
+            font-size: 19px;
+        }
+
+        .drop-zone {
+            min-width: 120px;
+        }
+
+        .matching-container {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .connector-categories {
+            grid-template-columns: 1fr;
+        }
+
+        .actions button,
+        .final-actions button {
+            width: 100%;
+        }
+    }
+
+    @media print {
+
+        body {
+            background: white;
+            color: #222;
+        }
+
+        .app {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        header,
+        .final-actions {
+            display: none !important;
+        }
+
+        .card,
+        .progress-area {
+            box-shadow: none;
+        }
+
+        .print-header {
+            display: block;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .print-header h1 {
+            margin: 0 0 6px;
+            font-size: 25px;
+        }
+
+        .print-header p {
+            margin: 0;
+            color: #666;
+        }
+
+        .summary-item {
+            break-inside: avoid;
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+        }
+
+        .score-circle .score {
+            font-size: 32px;
+        }
+
+        .summary-section {
+            break-inside: avoid;
+        }
+    }
+
+    /* ===== SETS ===== */
+    .info-note {
+        background: var(--light);
+        border-left: 4px solid var(--blue);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin: 18px 0 6px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.55;
+    }
+    .set-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+    }
+    .set-btn {
+        padding: 18px 12px;
+        font-size: 18px;
+    }
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(38, 53, 88, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 9999;
+    }
+    .modal-box {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 28px 24px;
+        max-width: 380px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    }
+    .modal-box h3 {
+        margin: 0 0 20px;
+        font-size: 20px;
+        color: var(--navy);
+    }
+    .modal-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    /* ===== LOGO ===== */
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .brand-logo {
+        height: 38px;
+        width: auto;
+        display: block;
+    }
+    .print-logo {
+        height: 50px;
+        margin: 0 auto 10px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <h1>Grammar Exercises</h1>
+    <p class="brand"><img class="brand-logo" src="data:image/png;base64,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" alt="D.C English Classes logo"><span>D.C English Classes</span></p>
+</header>
+
+<!-- START SCREEN -->
+
+<section id="startScreen" class="card start-screen">
+
+    <div class="topic-box">Future continuous</div>
+
+    <h2>Ready to practice?</h2>
+
+    <p>
+        In this exercise, you will practice <strong>Future continuous</strong> in General English contexts (level B2).
+    </p>
+
+    <p>
+        Each set contains <strong>10 questions</strong>.
+    </p>
+
+    <div class="info-note">
+        You don't have to complete all 50 questions at once. Choose any set to start and come back whenever you like: for example, do Set 1 today and Set 2 tomorrow. You can also redo any set as many times as you want.
+    </div>
+
+    <div class="set-grid">
+        <button class="btn-primary set-btn" onclick="startSet(0)">Set 1</button>
+        <button class="btn-primary set-btn" onclick="startSet(1)">Set 2</button>
+        <button class="btn-primary set-btn" onclick="startSet(2)">Set 3</button>
+        <button class="btn-primary set-btn" onclick="startSet(3)">Set 4</button>
+        <button class="btn-primary set-btn" onclick="startSet(4)">Set 5</button>
+    </div>
+
+</section>
+
+
+<!-- EXERCISE -->
+
+<section id="exerciseScreen" class="hidden">
+
+    <div class="progress-area">
+
+        <div class="progress-top">
+            <span id="progressText">Question 1 of 10</span>
+            <span id="scoreText">Score: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div id="questionType" class="question-type"></div>
+
+        <div id="questionNumber" class="question-number"></div>
+
+        <h2 id="questionText" class="question"></h2>
+
+        <div id="instructions" class="instructions"></div>
+
+        <div id="answerArea"></div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div class="actions">
+
+            <button
+                id="answerBtn"
+                class="btn-primary"
+                onclick="checkAnswer()">
+                Responder
+            </button>
+
+            <button
+                id="skipBtn"
+                class="btn-light"
+                onclick="skipQuestion()">
+                Pular
+            </button>
+
+            <button
+                id="retryBtn"
+                class="btn-red hidden"
+                onclick="retryCurrentQuestion()">
+                Tentar novamente
+            </button>
+
+            <button
+                id="nextBtn"
+                class="btn-blue hidden"
+                onclick="nextQuestion()">
+                Próxima pergunta
+            </button>
+
+            <button
+                id="finishBtn"
+                class="btn-green"
+                onclick="openFinishModal()">
+                Finalizar exercício
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section id="summaryScreen" class="hidden">
+
+    <div class="card">
+
+        <div class="print-header">
+            <img class="brand-logo print-logo" src="data:image/png;base64,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" alt="">
+            <h1>Grammar Exercises</h1>
+            <p>D.C English Classes · General English · B2 · Future continuous<span id="printSet"></span></p>
+        </div>
+
+        <div class="summary-header">
+
+            <div class="score-circle">
+                <span id="finalScore" class="score">0%</span>
+                <small>score</small>
+            </div>
+
+            <h2 id="summaryTitle">Set completed!</h2>
+
+            <p>
+                Here is your complete answer summary.
+            </p>
+
+            <div class="summary-meta">
+
+                <span>
+                    <strong>Topic:</strong> Future continuous
+                </span>
+
+                <span>
+                    <strong>Set:</strong> <span id="summarySet"></span>
+                </span>
+
+                <span>
+                    <strong>Questions:</strong> <span id="summaryQuestions">10</span>
+                </span>
+
+                <span>
+                    <strong>Date:</strong>
+                    <span id="summaryDate"></span>
+                </span>
+
+            </div>
+
+        </div>
+
+        <div id="summaryContent"></div>
+
+        <div class="final-actions">
+
+            <button
+                class="btn-primary"
+                onclick="restartExercise()">
+                Tentar novamente
+            </button>
+
+            <button
+                class="btn-light"
+                onclick="backToSets()">
+                Voltar aos sets
+            </button>
+
+            <button
+                class="btn-green"
+                onclick="savePDF()">
+                Salvar como PDF
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+<div id="finishModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3>Tem certeza que deseja finalizar o exercício?</h3>
+        <div class="modal-actions">
+            <button class="btn-primary" onclick="confirmFinish()">Sim</button>
+            <button class="btn-light" onclick="closeFinishModal()">Não</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const originalQuestions = [
+    {
+        "type": "Multiple Choice",
+        "question": "This time tomorrow, I _____ on a beach.",
+        "options": [
+            "will be lying",
+            "will lie",
+            "am lie",
+            "will have lain"
+        ],
+        "answer": "will be lying",
+        "explanation": "Action in progress at a future time.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Don't call at 8. We _____ dinner then.",
+        "options": [
+            "will be having",
+            "will have had",
+            "have",
+            "had"
+        ],
+        "answer": "will be having",
+        "explanation": "Future continuous for an action in progress.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "_____ the car tonight?",
+        "options": [
+            "Will you be using",
+            "Do you be using",
+            "Will you using",
+            "Are you will use"
+        ],
+        "answer": "Will you be using",
+        "explanation": "Polite question about plans.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "What does 'I'll be seeing Tom tomorrow' show?",
+        "options": [
+            "A planned or expected event",
+            "A sudden decision",
+            "A past habit",
+            "An ability"
+        ],
+        "answer": "A planned or expected event",
+        "explanation": "Normal course of events.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "By this time next week, she _____ in Paris.",
+        "options": [
+            "will be working",
+            "works",
+            "worked",
+            "is worked"
+        ],
+        "answer": "will be working",
+        "explanation": "Future in progress.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Don't phone at six. I _____ a shower.",
+        "options": [
+            "will be taking",
+            "take",
+            "took",
+            "will took"
+        ],
+        "answer": "will be taking",
+        "explanation": "In progress at six.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Next year at this time, I _____ English at university.",
+        "options": [
+            "will be studying",
+            "study",
+            "studied",
+            "will studying"
+        ],
+        "answer": "will be studying",
+        "explanation": "Future continuous.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "How do we form the future continuous?",
+        "options": [
+            "will + be + -ing",
+            "will + -ing",
+            "be + will + -ing",
+            "will + have + -ed"
+        ],
+        "answer": "will + be + -ing",
+        "explanation": "Will + be + verb-ing.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Which sentence is correct?",
+        "options": [
+            "I will be working late tomorrow.",
+            "I will working late tomorrow.",
+            "I will be work late tomorrow.",
+            "I be working late tomorrow."
+        ],
+        "answer": "I will be working late tomorrow.",
+        "explanation": "Will be + -ing.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Will you _____ the shop on your way home? Could you buy bread?",
+        "options": [
+            "be passing",
+            "passing",
+            "be pass",
+            "to pass"
+        ],
+        "answer": "be passing",
+        "explanation": "Will you be + -ing.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "At nine tomorrow, I _____ (work) in the office.",
+        "answer": "will be working",
+        "explanation": "Will be + -ing.",
+        "acceptable": [
+            "will be working",
+            "'ll be working"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "This time next week, they _____ (fly) to Rome.",
+        "answer": "will be flying",
+        "explanation": "Will be + -ing.",
+        "acceptable": [
+            "will be flying",
+            "'ll be flying"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "Don't call me at noon. I _____ (have) lunch with Dad.",
+        "answer": "will be having",
+        "explanation": "Action in progress.",
+        "acceptable": [
+            "will be having",
+            "'ll be having"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "She _____ (sleep) when you arrive, so be quiet.",
+        "answer": "will be sleeping",
+        "explanation": "In progress later.",
+        "acceptable": [
+            "will be sleeping",
+            "'ll be sleeping"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "In an hour, we _____ (drive) through the mountains.",
+        "answer": "will be driving",
+        "explanation": "Will be + -ing.",
+        "acceptable": [
+            "will be driving",
+            "'ll be driving"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "_____ you be using your laptop tonight?",
+        "answer": "Will",
+        "explanation": "Question: Will + subject + be + -ing.",
+        "category": "future continuous",
+        "acceptable": [
+            "Will"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "He _____ (not / work) tomorrow. It's a holiday.",
+        "answer": "won't be working",
+        "explanation": "Negative form.",
+        "acceptable": [
+            "won't be working",
+            "will not be working"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "At this time tomorrow, the kids _____ (play) in the park.",
+        "answer": "will be playing",
+        "explanation": "Will be + -ing.",
+        "acceptable": [
+            "will be playing",
+            "'ll be playing"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "I _____ (visit) my aunt on Sunday, so I can take your gift.",
+        "answer": "will be visiting",
+        "explanation": "Planned event.",
+        "acceptable": [
+            "will be visiting",
+            "'ll be visiting"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "Next summer, she _____ (study) in Canada.",
+        "answer": "will be studying",
+        "explanation": "Will be + -ing.",
+        "acceptable": [
+            "will be studying",
+            "'ll be studying"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "will / be / She / working / tomorrow",
+        "answer": "She will be working tomorrow.",
+        "explanation": "Will be + -ing.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "flying / be / We / will / to / Rome",
+        "answer": "We will be flying to Rome.",
+        "explanation": "Will be + -ing.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "Will / be / you / using / car / the / tonight?",
+        "answer": "Will you be using the car tonight?",
+        "explanation": "Question order.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "won't / be / He / sleeping / yet",
+        "answer": "He won't be sleeping yet.",
+        "explanation": "Negative form.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "be / At / will / eight / I / having / dinner",
+        "answer": "At eight I will be having dinner.",
+        "explanation": "Time expression first.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "they / Where / will / be / living / next / year?",
+        "answer": "Where will they be living next year?",
+        "explanation": "Wh- question order.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "be / will / The / waiting / children / outside",
+        "answer": "The children will be waiting outside.",
+        "explanation": "Will be + -ing.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "be / I'll / you / thinking / of",
+        "answer": "I'll be thinking of you.",
+        "explanation": "Contraction I'll.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the form.",
+        "sentenceBefore": "This time tomorrow, I",
+        "sentenceAfter": "in a meeting.",
+        "options": [
+            "will be sitting",
+            "will sit",
+            "sit",
+            "will sat"
+        ],
+        "answer": "will be sitting",
+        "explanation": "Future continuous.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the form.",
+        "sentenceBefore": "Don't call at nine. We",
+        "sentenceAfter": "a film.",
+        "options": [
+            "will be watching",
+            "will watch",
+            "watch",
+            "watched"
+        ],
+        "answer": "will be watching",
+        "explanation": "Action in progress.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the word.",
+        "sentenceBefore": "",
+        "sentenceAfter": "you be using the printer later?",
+        "options": [
+            "Will",
+            "Do",
+            "Are",
+            "Did"
+        ],
+        "answer": "Will",
+        "explanation": "Will you be + -ing?",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the form.",
+        "sentenceBefore": "She",
+        "sentenceAfter": "to her parents tonight.",
+        "options": [
+            "will be talking",
+            "talks",
+            "talked",
+            "will talks"
+        ],
+        "answer": "will be talking",
+        "explanation": "Future continuous.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the form.",
+        "sentenceBefore": "Next week, they",
+        "sentenceAfter": "in a hotel by the sea.",
+        "options": [
+            "will be staying",
+            "stay",
+            "stayed",
+            "will stayed"
+        ],
+        "answer": "will be staying",
+        "explanation": "Future continuous.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the form.",
+        "sentenceBefore": "He",
+        "sentenceAfter": "because he has a day off.",
+        "options": [
+            "won't be working",
+            "won't working",
+            "doesn't be working",
+            "not work"
+        ],
+        "answer": "won't be working",
+        "explanation": "Negative future continuous.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the form.",
+        "sentenceBefore": "By midnight, we",
+        "sentenceAfter": "on the bus.",
+        "options": [
+            "will be travelling",
+            "travelled",
+            "travels",
+            "will travelling"
+        ],
+        "answer": "will be travelling",
+        "explanation": "Future continuous.",
+        "category": "future continuous"
+    },
+    {
+        "type": "Matching",
+        "question": "Match each subject to its future continuous form.",
+        "pairs": [
+            {
+                "left": "I",
+                "right": "will be working"
+            },
+            {
+                "left": "she",
+                "right": "will be sleeping"
+            },
+            {
+                "left": "they",
+                "right": "will be waiting"
+            },
+            {
+                "left": "we",
+                "right": "will be driving"
+            },
+            {
+                "left": "he",
+                "right": "won't be coming"
+            }
+        ],
+        "explanation": "Will be + -ing.",
+        "category": "future continuous",
+        "answer": "I → will be working, she → will be sleeping, they → will be waiting, we → will be driving, he → won't be coming"
+    },
+    {
+        "type": "Matching",
+        "question": "Match each form to its pattern.",
+        "pairs": [
+            {
+                "left": "Positive",
+                "right": "will be + -ing"
+            },
+            {
+                "left": "Negative",
+                "right": "won't be + -ing"
+            },
+            {
+                "left": "Question",
+                "right": "Will + subject + be + -ing?"
+            },
+            {
+                "left": "Short answer",
+                "right": "Yes, I will."
+            },
+            {
+                "left": "Contraction",
+                "right": "I'll be working"
+            }
+        ],
+        "explanation": "Forms of the future continuous.",
+        "category": "future continuous",
+        "answer": "Positive → will be + -ing, Negative → won't be + -ing, Question → Will + subject + be + -ing?, Short answer → Yes, I will., Contraction → I'll be working"
+    },
+    {
+        "type": "Matching",
+        "question": "Match each time expression to a sentence.",
+        "pairs": [
+            {
+                "left": "At 6 p.m. tomorrow",
+                "right": "I'll be cooking"
+            },
+            {
+                "left": "This time next week",
+                "right": "we'll be flying"
+            },
+            {
+                "left": "In two hours",
+                "right": "she'll be driving home"
+            },
+            {
+                "left": "Tomorrow morning",
+                "right": "they'll be training"
+            },
+            {
+                "left": "At midnight",
+                "right": "he'll be sleeping"
+            }
+        ],
+        "explanation": "Action in progress then.",
+        "category": "future continuous",
+        "answer": "At 6 p.m. tomorrow → I'll be cooking, This time next week → we'll be flying, In two hours → she'll be driving home, Tomorrow morning → they'll be training, At midnight → he'll be sleeping"
+    },
+    {
+        "type": "Matching",
+        "question": "Match each use to an example.",
+        "pairs": [
+            {
+                "left": "planned event",
+                "right": "I'll be seeing Tom tomorrow."
+            },
+            {
+                "left": "action in progress at a future time",
+                "right": "At nine, I'll be working."
+            },
+            {
+                "left": "polite question",
+                "right": "Will you be using the car?"
+            },
+            {
+                "left": "temporary situation",
+                "right": "Next month I'll be living with my aunt."
+            }
+        ],
+        "explanation": "Uses of the future continuous.",
+        "category": "future continuous",
+        "answer": "planned event → I'll be seeing Tom tomorrow., action in progress at a future time → At nine, I'll be working., polite question → Will you be using the car?, temporary situation → Next month I'll be living with my aunt."
+    },
+    {
+        "type": "Matching",
+        "question": "Match each beginning to the correct ending.",
+        "pairs": [
+            {
+                "left": "Don't call at eight,",
+                "right": "I'll be having dinner"
+            },
+            {
+                "left": "This time tomorrow,",
+                "right": "we'll be lying on the beach"
+            },
+            {
+                "left": "Will you be",
+                "right": "passing the bank later?"
+            },
+            {
+                "left": "She won't be",
+                "right": "working on Sunday"
+            },
+            {
+                "left": "They'll be",
+                "right": "waiting at the station"
+            }
+        ],
+        "explanation": "Future continuous.",
+        "category": "future continuous",
+        "answer": "Don't call at eight, → I'll be having dinner, This time tomorrow, → we'll be lying on the beach, Will you be → passing the bank later?, She won't be → working on Sunday, They'll be → waiting at the station"
+    },
+    {
+        "type": "Find the Error",
+        "question": "I will working at six tomorrow.",
+        "answer": "will be working",
+        "explanation": "Be is missing.",
+        "category": "future continuous",
+        "acceptable": [
+            "will be working"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "At noon, they will be have lunch.",
+        "answer": "will be having",
+        "explanation": "Use -ing after be.",
+        "category": "future continuous",
+        "acceptable": [
+            "will be having"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "This time tomorrow, I will be fly to Rio.",
+        "answer": "will be flying",
+        "explanation": "Use -ing after be.",
+        "category": "future continuous",
+        "acceptable": [
+            "will be flying"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "She will be sleep when you arrive.",
+        "answer": "will be sleeping",
+        "explanation": "Use -ing after be.",
+        "category": "future continuous",
+        "acceptable": [
+            "will be sleeping"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "We will be wait for you at the gate.",
+        "answer": "will be waiting",
+        "explanation": "Use -ing after be.",
+        "category": "future continuous",
+        "acceptable": [
+            "will be waiting"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "Will you being using the car tonight?",
+        "answer": "be using",
+        "explanation": "Will you be using.",
+        "category": "future continuous",
+        "acceptable": [
+            "be using"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "He won't working tomorrow.",
+        "answer": "won't be working",
+        "explanation": "Be is missing.",
+        "category": "future continuous",
+        "acceptable": [
+            "won't be working"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "By next year, I'll be live in Spain.",
+        "answer": "be living",
+        "explanation": "Use -ing after be.",
+        "category": "future continuous",
+        "acceptable": [
+            "be living"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "They will to be travelling next week.",
+        "answer": "will be travelling",
+        "explanation": "No to after will.",
+        "acceptable": [
+            "will be travelling",
+            "will be traveling"
+        ],
+        "category": "future continuous"
+    },
+    {
+        "type": "Find the Error",
+        "question": "What will you be do at eight?",
+        "answer": "be doing",
+        "explanation": "Use -ing after be.",
+        "category": "future continuous",
+        "acceptable": [
+            "be doing"
+        ]
+    }
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let questions = [];
+let finishedEarly = false;
+let currentSet = 0;
+const SET_COUNT = 5;
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+let answered = false;
+
+let draggedConnector = null;
+
+let selectedMatchLeft = null;
+let matchingPairs = {};
+let matchingRightOrder = [];
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
+
+function shuffleArray(array) {
+
+    const copy = [...array];
+
+    for (let i = copy.length - 1; i > 0; i--) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [copy[i], copy[j]] =
+            [copy[j], copy[i]];
+    }
+
+    return copy;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function prepareQuestions(list) {
+    return shuffleArray(list).map(q => {
+        const copy = {...q};
+        if (copy.options) {
+            copy.options = shuffleArray(copy.options);
+        }
+        return copy;
+    });
+}
+
+function setQuestions(b) {
+    return originalQuestions.filter(
+        (_, i) => i % SET_COUNT === b
+    );
+}
+
+function startSet(b) {
+    currentSet = b;
+    finishedEarly = false;
+    currentQuestion = 0;
+    score = 0;
+    answers = [];
+    answered = false;
+    draggedConnector = null;
+    questions = prepareQuestions(setQuestions(b));
+
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("summaryScreen").classList.add("hidden");
+    document.getElementById("exerciseScreen").classList.remove("hidden");
+
+    loadQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
+
+function loadQuestion() {
+
+    answered = false;
+
+    draggedConnector = null;
+
+    selectedMatchLeft = null;
+    matchingPairs = {};
+    matchingRightOrder = [];
+
+    const q =
+        questions[currentQuestion];
+
+    document.getElementById("questionType")
+        .textContent = q.type;
+
+    document.getElementById("questionNumber")
+        .textContent =
+        `Question ${currentQuestion + 1}`;
+
+    document.getElementById("questionText")
+        .textContent = q.question;
+
+    document.getElementById("progressText")
+        .textContent =
+        `Set ${currentSet + 1} · Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("scoreText")
+        .textContent =
+        `Score: ${score}`;
+
+    const progress =
+        (currentQuestion / questions.length) * 100;
+
+    document.getElementById("progressFill")
+        .style.width =
+        `${progress}%`;
+
+    const instructions =
+        document.getElementById("instructions");
+
+    const answerArea =
+        document.getElementById("answerArea");
+
+    const feedback =
+        document.getElementById("feedback");
+
+    feedback.className = "feedback";
+    feedback.innerHTML = "";
+
+    answerArea.innerHTML = "";
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+    ===================================================== */
+
+    if (q.type === "Multiple Choice") {
+
+        instructions.textContent =
+            "Choose the correct answer.";
+
+        const options =
+            document.createElement("div");
+
+        options.className = "options";
+
+        q.options.forEach(
+            (option, index) => {
+
+                const button =
+                    document.createElement("div");
+
+                button.className =
+                    "option";
+
+                button.textContent =
+                    `${String.fromCharCode(65 + index)}. ${option}`;
+
+                button.dataset.value =
+                    option;
+
+                button.onclick =
+                    function() {
+
+                        if (answered) return;
+
+                        document.querySelectorAll(
+                            ".option"
+                        ).forEach(el =>
+                            el.classList.remove(
+                                "selected"
+                            )
+                        );
+
+                        button.classList.add(
+                            "selected"
+                        );
+                    };
+
+                options.appendChild(button);
+            }
+        );
+
+        answerArea.appendChild(options);
+    }
+
+
+    /* =====================================================
+       FILL IN THE GAPS
+    ===================================================== */
+
+    else if (q.type === "Fill in the Gaps") {
+
+        instructions.textContent =
+            "Type the correct answer.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type your answer here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       FIND THE ERROR
+    ===================================================== */
+
+    else if (q.type === "Find the Error") {
+
+        instructions.textContent =
+            "Find the mistake and type the correct word.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type the correction here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       UNSCRAMBLE
+    ===================================================== */
+
+    else if (
+        q.type === "Unscramble the Words"
+    ) {
+
+        instructions.textContent =
+            "Rearrange the words to create a correct sentence.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type the complete sentence here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    else if (
+        q.type === "Drag & Drop"
+    ) {
+
+        instructions.textContent =
+            "Drag the correct answer into the blank.";
+
+
+        /* ---------- SENTENCE ---------- */
+
+        const sentence =
+            document.createElement("div");
+
+        sentence.className =
+            "drag-sentence";
+
+
+        if (q.sentenceBefore) {
+
+            sentence.appendChild(
+                document.createTextNode(
+                    q.sentenceBefore + " "
+                )
+            );
+        }
+
+
+        /* ---------- DROP ZONE ---------- */
+
+        const dropZone =
+            document.createElement("span");
+
+        dropZone.className =
+            "drop-zone";
+
+        dropZone.id =
+            "dropZone";
+
+        dropZone.textContent =
+            "Drop here";
+
+        sentence.appendChild(
+            dropZone
+        );
+
+
+        if (q.sentenceAfter) {
+
+            sentence.appendChild(
+                document.createTextNode(
+                    " " + q.sentenceAfter
+                )
+            );
+        }
+
+
+        answerArea.appendChild(
+            sentence
+        );
+
+
+        /* ---------- OPTIONS ---------- */
+
+        const dragOptions =
+            document.createElement("div");
+
+        dragOptions.className =
+            "drag-options";
+
+
+        q.options.forEach(
+            option => {
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "drag-option";
+
+                item.textContent =
+                    option;
+
+                item.dataset.value =
+                    option;
+
+                item.setAttribute(
+                    "draggable",
+                    "true"
+                );
+
+
+                /* =========================
+                   DRAG START
+                ========================= */
+
+                item.addEventListener(
+                    "dragstart",
+                    function(event) {
+
+                        if (answered) {
+
+                            event.preventDefault();
+
+                            return;
+                        }
+
+                        draggedConnector =
+                            option;
+
+                        event.dataTransfer.effectAllowed =
+                            "copy";
+
+                        event.dataTransfer.setData(
+                            "text/plain",
+                            option
+                        );
+
+                        item.classList.add(
+                            "dragging"
+                        );
+                    }
+                );
+
+
+                /* =========================
+                   DRAG END
+                ========================= */
+
+                item.addEventListener(
+                    "dragend",
+                    function() {
+
+                        item.classList.remove(
+                            "dragging"
+                        );
+
+                        draggedConnector =
+                            null;
+
+                        dropZone.classList.remove(
+                            "drag-over"
+                        );
+                    }
+                );
+
+
+                /*
+                   IMPORTANT:
+                   There is NO click event here.
+                   The option must be dragged.
+                */
+
+
+                dragOptions.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            dragOptions
+        );
+
+
+        /* ---------- HINT ---------- */
+
+        const hint =
+            document.createElement("div");
+
+        hint.className =
+            "drag-hint";
+
+        hint.textContent =
+            "Drag one of the options into the blank.";
+
+        answerArea.appendChild(
+            hint
+        );
+
+
+        /* =========================
+           DRAG OVER
+        ========================= */
+
+        dropZone.addEventListener(
+            "dragover",
+            function(event) {
+
+                if (answered) return;
+
+                event.preventDefault();
+
+                event.dataTransfer.dropEffect =
+                    "copy";
+
+                dropZone.classList.add(
+                    "drag-over"
+                );
+            }
+        );
+
+
+        /* =========================
+           DRAG LEAVE
+        ========================= */
+
+        dropZone.addEventListener(
+            "dragleave",
+            function() {
+
+                dropZone.classList.remove(
+                    "drag-over"
+                );
+            }
+        );
+
+
+        /* =========================
+           DROP
+        ========================= */
+
+        dropZone.addEventListener(
+            "drop",
+            function(event) {
+
+                if (answered) return;
+
+                event.preventDefault();
+
+                dropZone.classList.remove(
+                    "drag-over"
+                );
+
+                const value =
+                    event.dataTransfer.getData(
+                        "text/plain"
+                    ) ||
+                    draggedConnector;
+
+                if (!value) return;
+
+                placeConnector(value);
+            }
+        );
+    }
+
+
+    /* =====================================================
+       MATCHING
+    ===================================================== */
+
+    else if (
+        q.type === "Matching"
+    ) {
+
+        instructions.textContent =
+            "Tap an item on the left, then tap its match on the right.";
+
+        matchingRightOrder =
+            shuffleArray(
+                q.pairs.map(
+                    p => p.right
+                )
+            );
+
+        const container =
+            document.createElement("div");
+
+        container.className =
+            "matching-container";
+
+        const leftCol =
+            document.createElement("div");
+
+        leftCol.className =
+            "match-column";
+
+        const rightCol =
+            document.createElement("div");
+
+        rightCol.className =
+            "match-column";
+
+        container.appendChild(leftCol);
+        container.appendChild(rightCol);
+
+        answerArea.appendChild(container);
+
+        const hint =
+            document.createElement("div");
+
+        hint.className =
+            "drag-hint";
+
+        hint.textContent =
+            "Tap items to pair them. Tap a paired item again to change it.";
+
+        answerArea.appendChild(hint);
+
+        renderMatchingColumns(
+            q,
+            leftCol,
+            rightCol
+        );
+    }
+
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    document.getElementById("answerBtn")
+        .classList.remove("hidden");
+
+    document.getElementById("skipBtn")
+        .classList.remove("hidden");
+
+    document.getElementById("retryBtn")
+        .classList.add("hidden");
+
+    document.getElementById("nextBtn")
+        .classList.add("hidden");
+
+    document.getElementById("nextBtn")
+        .textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+}
+
+
+/* =========================================================
+   PLACE CONNECTOR
+========================================================= */
+
+function placeConnector(value) {
+
+    if (!value || answered) return;
+
+    const dropZone =
+        document.getElementById("dropZone");
+
+    if (!dropZone) return;
+
+    dropZone.textContent =
+        value;
+
+    dropZone.classList.add(
+        "filled"
+    );
+
+
+    document.querySelectorAll(
+        ".drag-option"
+    ).forEach(option => {
+
+        option.classList.remove(
+            "selected"
+        );
+
+        if (
+            option.dataset.value ===
+            value
+        ) {
+
+            option.classList.add(
+                "selected"
+            );
+        }
+    });
+}
+
+
+/* =========================================================
+   RENDER MATCHING COLUMNS
+========================================================= */
+
+function renderMatchingColumns(
+    q,
+    leftCol,
+    rightCol
+) {
+
+    leftCol.innerHTML = "";
+    rightCol.innerHTML = "";
+
+    q.pairs.forEach(
+        pair => {
+
+            const item =
+                document.createElement("button");
+
+            item.type = "button";
+
+            item.className =
+                "match-item match-left";
+
+            if (
+                selectedMatchLeft ===
+                pair.left
+            ) {
+
+                item.classList.add(
+                    "selected"
+                );
+            }
+
+            if (
+                matchingPairs[pair.left] !==
+                undefined
+            ) {
+
+                item.classList.add(
+                    "paired"
+                );
+            }
+
+            item.textContent =
+                pair.left;
+
+            item.dataset.value =
+                pair.left;
+
+            item.onclick =
+                function() {
+
+                    if (answered) return;
+
+                    selectedMatchLeft =
+                        pair.left;
+
+                    renderMatchingColumns(
+                        q,
+                        leftCol,
+                        rightCol
+                    );
+                };
+
+            leftCol.appendChild(item);
+        }
+    );
+
+    matchingRightOrder.forEach(
+        rightValue => {
+
+            const item =
+                document.createElement("button");
+
+            item.type = "button";
+
+            item.className =
+                "match-item match-right";
+
+            const pairedLeft =
+                Object.keys(
+                    matchingPairs
+                ).find(
+                    left =>
+                        matchingPairs[left] ===
+                        rightValue
+                );
+
+            if (pairedLeft) {
+
+                item.classList.add(
+                    "paired"
+                );
+            }
+
+            item.textContent =
+                rightValue;
+
+            item.dataset.value =
+                rightValue;
+
+            item.onclick =
+                function() {
+
+                    if (answered) return;
+
+                    if (!selectedMatchLeft) return;
+
+                    const previousLeft =
+                        Object.keys(
+                            matchingPairs
+                        ).find(
+                            left =>
+                                matchingPairs[left] ===
+                                rightValue
+                        );
+
+                    if (previousLeft) {
+
+                        delete matchingPairs[
+                            previousLeft
+                        ];
+                    }
+
+                    matchingPairs[
+                        selectedMatchLeft
+                    ] = rightValue;
+
+                    selectedMatchLeft = null;
+
+                    renderMatchingColumns(
+                        q,
+                        leftCol,
+                        rightCol
+                    );
+                };
+
+            rightCol.appendChild(item);
+        }
+    );
+}
+
+
+/* =========================================================
+   CHECK ANSWER
+========================================================= */
+
+function checkAnswer() {
+
+    if (answered) return;
+
+    const q =
+        questions[currentQuestion];
+
+    let userAnswer = "";
+    let isCorrect = false;
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if (q.type === "Multiple Choice") {
+
+        const selected =
+            document.querySelector(
+                ".option.selected"
+            );
+
+        if (!selected) {
+
+            alert(
+                "Please choose an answer before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            selected.dataset.value;
+
+        isCorrect =
+            normalizeText(userAnswer) ===
+            normalizeText(q.answer);
+    }
+
+
+    /* ================= TEXT ANSWERS ================= */
+
+    else if (
+        q.type === "Fill in the Gaps" ||
+        q.type === "Unscramble the Words" ||
+        q.type === "Find the Error"
+    ) {
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+        if (
+            !input ||
+            !input.value.trim()
+        ) {
+
+            alert(
+                "Please type an answer before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            input.value.trim();
+
+
+        if (
+            q.type ===
+            "Fill in the Gaps" ||
+            q.type ===
+            "Find the Error"
+        ) {
+
+            const normalized =
+                normalizeText(
+                    userAnswer
+                );
+
+            const acceptableList =
+                q.acceptable ||
+                [q.answer];
+
+            isCorrect =
+                acceptableList.some(
+                    answer =>
+                        normalizeText(answer) ===
+                        normalized
+                );
+
+        } else {
+
+            isCorrect =
+                checkUnscramble(
+                    userAnswer,
+                    q
+                );
+        }
+    }
+
+
+    /* ================= DRAG & DROP ================= */
+
+    else if (
+        q.type === "Drag & Drop"
+    ) {
+
+        const dropZone =
+            document.getElementById(
+                "dropZone"
+            );
+
+        if (
+            !dropZone ||
+            !dropZone.classList.contains(
+                "filled"
+            )
+        ) {
+
+            alert(
+                "Please drag an option into the blank before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            dropZone.textContent.trim();
+
+        isCorrect =
+            normalizeText(userAnswer) ===
+            normalizeText(q.answer);
+    }
+
+
+    /* ================= MATCHING ================= */
+
+    else if (
+        q.type === "Matching"
+    ) {
+
+        if (
+            Object.keys(matchingPairs).length <
+            q.pairs.length
+        ) {
+
+            alert(
+                "Please match every item before clicking Responder."
+            );
+
+            return;
+        }
+
+        isCorrect =
+            q.pairs.every(
+                pair =>
+                    matchingPairs[pair.left] ===
+                    pair.right
+            );
+
+        userAnswer =
+            q.pairs.map(
+                pair =>
+                    `${pair.left} → ${matchingPairs[pair.left]}`
+            ).join(", ");
+    }
+
+
+    answered = true;
+
+
+    /* =====================================================
+       POINT CONTROL
+    ===================================================== */
+
+    const previous =
+        answers[currentQuestion];
+
+    if (
+        isCorrect &&
+        (!previous ||
+        !previous.pointAwarded)
+    ) {
+
+        score++;
+    }
+
+
+    answers[currentQuestion] = {
+
+        userAnswer:
+            userAnswer,
+
+        correct:
+            isCorrect,
+
+        skipped:
+            false,
+
+        pointAwarded:
+            (
+                isCorrect ||
+                (
+                    previous &&
+                    previous.pointAwarded
+                )
+            )
+    };
+
+
+    showFeedback(
+        isCorrect,
+        q
+    );
+
+
+    document.getElementById(
+        "answerBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "skipBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "retryBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+
+    updateScoreDisplay();
+}
+
+
+/* =========================================================
+   UNSCRAMBLE CHECK
+========================================================= */
+
+function checkUnscramble(
+    userAnswer,
+    q
+) {
+
+    const clean =
+        normalizeSentence(
+            userAnswer
+        );
+
+    const expected =
+        normalizeSentence(
+            q.answer
+        );
+
+    return clean === expected;
+}
+
+
+function normalizeSentence(text) {
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[.,!?;:]/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+/* =========================================================
+   NORMALIZE
+========================================================= */
+
+function normalizeText(text) {
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[.,!?;:]/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+function showFeedback(
+    isCorrect,
+    q
+) {
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    if (isCorrect) {
+
+        feedback.className =
+            "feedback correct";
+
+        feedback.innerHTML = `
+
+            <strong>✓ Correct!</strong>
+
+            ${q.explanation}
+
+            ${
+                q.positionExplanation
+                    ? `
+                    <div class="position-note">
+                        ${q.positionExplanation}
+                    </div>
+                    `
+                    : ""
+            }
+
+        `;
+
+    } else {
+
+        feedback.className =
+            "feedback incorrect";
+
+        feedback.innerHTML = `
+
+            <strong>✗ Incorrect.</strong>
+
+            ${q.explanation}
+
+            <br>
+
+            <strong>Correct answer:</strong>
+            ${escapeHTML(q.answer)}
+
+            ${
+                q.positionExplanation
+                    ? `
+                    <div class="position-note">
+                        ${q.positionExplanation}
+                    </div>
+                    `
+                    : ""
+            }
+
+        `;
+    }
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if (
+        q.type === "Multiple Choice"
+    ) {
+
+        document.querySelectorAll(
+            ".option"
+        ).forEach(option => {
+
+            if (
+                normalizeText(
+                    option.dataset.value
+                ) ===
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "correct"
+                );
+            }
+
+            if (
+                option.classList.contains(
+                    "selected"
+                ) &&
+                normalizeText(
+                    option.dataset.value
+                ) !==
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "incorrect"
+                );
+            }
+        });
+    }
+
+
+    /* ================= DRAG & DROP ================= */
+
+    if (
+        q.type === "Drag & Drop"
+    ) {
+
+        document.querySelectorAll(
+            ".drag-option"
+        ).forEach(option => {
+
+            if (
+                normalizeText(
+                    option.dataset.value
+                ) ===
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "correct"
+                );
+            }
+
+            if (
+                option.classList.contains(
+                    "selected"
+                ) &&
+                normalizeText(
+                    option.dataset.value
+                ) !==
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "incorrect"
+                );
+            }
+        });
+    }
+
+
+    /* ================= MATCHING ================= */
+
+    if (
+        q.type === "Matching"
+    ) {
+
+        document.querySelectorAll(
+            ".match-left"
+        ).forEach(el => {
+
+            const left =
+                el.dataset.value;
+
+            const correctRight =
+                q.pairs.find(
+                    p => p.left === left
+                ).right;
+
+            const givenRight =
+                matchingPairs[left];
+
+            el.classList.add(
+                givenRight === correctRight
+                    ? "correct"
+                    : "incorrect"
+            );
+        });
+
+        document.querySelectorAll(
+            ".match-right"
+        ).forEach(el => {
+
+            const right =
+                el.dataset.value;
+
+            const pairedLeft =
+                Object.keys(
+                    matchingPairs
+                ).find(
+                    left =>
+                        matchingPairs[left] ===
+                        right
+                );
+
+            if (!pairedLeft) return;
+
+            const correctRight =
+                q.pairs.find(
+                    p => p.left === pairedLeft
+                ).right;
+
+            el.classList.add(
+                right === correctRight
+                    ? "correct"
+                    : "incorrect"
+            );
+        });
+    }
+}
+
+
+/* =========================================================
+   SKIP
+========================================================= */
+
+function skipQuestion() {
+
+    if (answered) return;
+
+    const q =
+        questions[currentQuestion];
+
+    answered = true;
+
+    answers[currentQuestion] = {
+
+        userAnswer:
+            "Pulo",
+
+        correct:
+            false,
+
+        skipped:
+            true,
+
+        pointAwarded:
+            false
+    };
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+    feedback.className =
+        "feedback incorrect";
+
+    feedback.innerHTML = `
+
+        <strong>Question skipped.</strong>
+
+        This question counts as incorrect in the final score.
+
+        <br><br>
+
+        <strong>Correct answer:</strong>
+        ${escapeHTML(q.answer)}
+
+        <br><br>
+
+        ${q.explanation}
+
+        ${
+            q.positionExplanation
+                ? `
+                <div class="position-note">
+                    ${q.positionExplanation}
+                </div>
+                `
+                : ""
+        }
+
+    `;
+
+
+    document.getElementById(
+        "answerBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "skipBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "retryBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+}
+
+
+/* =========================================================
+   RETRY
+========================================================= */
+
+function retryCurrentQuestion() {
+
+    const previousAnswer =
+        answers[currentQuestion];
+
+    loadQuestion();
+
+    /*
+       If the question was previously correct,
+       the point remains in the score.
+    */
+
+    if (
+        previousAnswer &&
+        previousAnswer.pointAwarded
+    ) {
+
+        updateScoreDisplay();
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+========================================================= */
+
+function nextQuestion() {
+
+    if (!answered) {
+        return;
+    }
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        currentQuestion++;
+
+        loadQuestion();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    } else {
+
+        showSummary();
+    }
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+function updateScoreDisplay() {
+
+    document.getElementById(
+        "scoreText"
+    ).textContent =
+        `Score: ${score}`;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function showSummary() {
+
+    const answeredCount =
+        answers.filter(Boolean).length;
+    const denom =
+        finishedEarly ? answeredCount : questions.length;
+    document.getElementById("summaryQuestions").textContent =
+        finishedEarly
+            ? `${answeredCount} of ${questions.length} answered`
+            : questions.length;
+
+    document.getElementById("summaryTitle").textContent =
+        `Set ${currentSet + 1} completed!`;
+    document.getElementById("summarySet").textContent =
+        currentSet + 1;
+    const pb = document.getElementById("printSet");
+    if (pb) { pb.textContent = ` · Set ${currentSet + 1}`; }
+
+    document.getElementById(
+        "exerciseScreen"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "summaryScreen"
+    ).classList.remove("hidden");
+
+
+    const percentage =
+        (denom ? Math.round((score / denom) * 100) : 0);
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        `${percentage}%`;
+
+
+    const now =
+        new Date();
+
+    document.getElementById(
+        "summaryDate"
+    ).textContent =
+        now.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+
+    const summaryContent =
+        document.getElementById(
+            "summaryContent"
+        );
+
+    summaryContent.innerHTML = "";
+    if (finishedEarly && answeredCount === 0) {
+        summaryContent.innerHTML = '<p style="text-align:center;color:#666;margin:20px 0;">No questions were answered in this set.</p>';
+    }
+
+
+    let currentSection = "";
+
+
+    questions.forEach((q, index) => {
+            if (finishedEarly && !answers[index]) { return; }
+
+            const result =
+                answers[index] || {
+
+                    userAnswer:
+                        "Pulo",
+
+                    correct:
+                        false,
+
+                    skipped:
+                        true
+                };
+
+
+            if (
+                q.type !==
+                currentSection
+            ) {
+
+                currentSection =
+                    q.type;
+
+                const section =
+                    document.createElement(
+                        "div"
+                    );
+
+                section.className =
+                    "summary-section";
+
+                const heading =
+                    document.createElement(
+                        "h3"
+                    );
+
+                heading.textContent =
+                    q.type;
+
+                section.appendChild(
+                    heading
+                );
+
+                summaryContent.appendChild(
+                    section
+                );
+            }
+
+
+            const section =
+                summaryContent.lastElementChild;
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            let statusClass =
+                "incorrect";
+
+            let statusText =
+                "Incorrect";
+
+
+            if (
+                result.skipped
+            ) {
+
+                statusClass =
+                    "skipped";
+
+                statusText =
+                    "Pulo";
+
+            } else if (
+                result.correct
+            ) {
+
+                statusClass =
+                    "correct";
+
+                statusText =
+                    "Correct";
+            }
+
+
+            item.className =
+                `summary-item ${statusClass}`;
+
+
+            const displayedUserAnswer =
+                result.skipped
+                    ? "Pulo"
+                    : (
+                        result.userAnswer ||
+                        "—"
+                    );
+
+
+            item.innerHTML = `
+
+                <div class="summary-question">
+                    ${index + 1}. ${escapeHTML(q.question)}
+                </div>
+
+                <div class="summary-answer">
+
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                    <br>
+
+                    <strong>Your answer:</strong>
+                    ${escapeHTML(displayedUserAnswer)}
+
+                    <br>
+
+                    <strong>Correct answer:</strong>
+                    ${escapeHTML(q.answer)}
+
+                </div>
+
+            `;
+
+
+            section.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+/* =========================================================
+   RESTART
+========================================================= */
+
+function restartExercise() {
+    startSet(currentSet);
+}
+
+
+/* =========================================================
+   SAVE AS PDF
+========================================================= */
+
+function savePDF() {
+
+    window.print();
+}
+
+
+/* =========================================================
+   BACK TO SETS + FINISH MODAL
+========================================================= */
+
+function backToSets() {
+    closeFinishModal();
+    document.getElementById("summaryScreen").classList.add("hidden");
+    document.getElementById("exerciseScreen").classList.add("hidden");
+    document.getElementById("startScreen").classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openFinishModal() {
+    document.getElementById("finishModal").classList.remove("hidden");
+}
+
+function closeFinishModal() {
+    document.getElementById("finishModal").classList.add("hidden");
+}
+
+function confirmFinish() {
+    closeFinishModal();
+    finishedEarly = true;
+    showSummary();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+        closeFinishModal();
+    }
+});
+
+</script>
+</body>
+</html>
