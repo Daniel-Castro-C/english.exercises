@@ -1,0 +1,3299 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ability – could / couldn’t (past ability) - D.C English Classes</title>
+
+<style>
+    :root {
+        --navy: #263558;
+        --blue: #67a7d3;
+        --white: #ffffff;
+        --light: #f4f8fb;
+        --text: #263558;
+        --green: #2e9d62;
+        --red: #d9534f;
+        --gray: #6c757d;
+        --yellow: #f0ad4e;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #f4f8fb, #e9f3fa);
+        color: var(--text);
+        min-height: 100vh;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px 20px 60px;
+    }
+
+    header {
+        background: var(--navy);
+        color: white;
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(38, 53, 88, 0.15);
+    }
+
+    header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(25px, 5vw, 38px);
+    }
+
+    header p {
+        margin: 0;
+        color: #dbe9f3;
+        font-size: 16px;
+    }
+
+    .progress-area {
+        background: white;
+        padding: 18px 22px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 20px rgba(38, 53, 88, 0.08);
+    }
+
+    .progress-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .progress-bar {
+        height: 10px;
+        background: #e5edf3;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--blue);
+        transition: width 0.3s ease;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(38, 53, 88, 0.10);
+    }
+
+    .question-type {
+        display: inline-block;
+        background: #e4f2fb;
+        color: var(--navy);
+        font-weight: bold;
+        padding: 7px 12px;
+        border-radius: 30px;
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    .question-number {
+        color: var(--blue);
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .question {
+        font-size: 23px;
+        line-height: 1.5;
+        margin: 0 0 25px;
+    }
+
+    .instructions {
+        color: var(--gray);
+        margin-top: -12px;
+        margin-bottom: 22px;
+    }
+
+    .options {
+        display: grid;
+        gap: 12px;
+    }
+
+    .option {
+        border: 2px solid #dbe7ef;
+        background: white;
+        padding: 15px 17px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 17px;
+        color: var(--text);
+    }
+
+    .option:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+    }
+
+    .option.selected {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .option.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+    }
+
+    .option.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+    }
+
+    .text-answer {
+        width: 100%;
+        padding: 16px;
+        border: 2px solid #dbe7ef;
+        border-radius: 12px;
+        font-size: 18px;
+        color: var(--text);
+        outline: none;
+        transition: border 0.2s;
+    }
+
+    .text-answer:focus {
+        border-color: var(--blue);
+    }
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    .drag-sentence {
+        font-size: 22px;
+        line-height: 2;
+        margin: 20px 0;
+    }
+
+    .drop-zone {
+        display: inline-flex;
+        min-width: 150px;
+        min-height: 48px;
+        padding: 6px 14px;
+        margin: 0 6px;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed var(--blue);
+        border-radius: 10px;
+        background: #f4faff;
+        color: var(--gray);
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+
+    .drop-zone.drag-over {
+        background: #e4f2fb;
+        border-color: var(--navy);
+        transform: scale(1.03);
+    }
+
+    .drop-zone.filled {
+        border-style: solid;
+        background: #eaf5fc;
+        color: var(--navy);
+    }
+
+    .drag-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .drag-option {
+        padding: 13px 18px;
+        background: white;
+        border: 2px solid #dbe7ef;
+        border-radius: 12px;
+        cursor: grab;
+        font-size: 17px;
+        font-weight: bold;
+        user-select: none;
+        transition: all 0.2s ease;
+        touch-action: none;
+    }
+
+    .drag-option:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+        transform: translateY(-1px);
+    }
+
+    .drag-option:active {
+        cursor: grabbing;
+    }
+
+    .drag-option.dragging {
+        opacity: 0.5;
+    }
+
+    .drag-option.selected {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .drag-option.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+    }
+
+    .drag-option.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+    }
+
+    .drag-hint {
+        font-size: 14px;
+        color: var(--gray);
+        margin-top: 12px;
+    }
+
+    /* =====================================================
+       MATCHING
+    ===================================================== */
+
+    .matching-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .match-column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .match-item {
+        border: 2px solid #dbe7ef;
+        background: white;
+        padding: 14px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 16px;
+        color: var(--text);
+        text-align: left;
+        font-family: inherit;
+    }
+
+    .match-item:hover {
+        border-color: var(--blue);
+        background: #f7fbfe;
+    }
+
+    .match-item.selected {
+        border-color: var(--navy);
+        background: #eaf5fc;
+        box-shadow: 0 0 0 2px var(--navy) inset;
+    }
+
+    .match-item.paired {
+        border-color: var(--blue);
+        background: #eaf5fc;
+    }
+
+    .match-item.correct {
+        border-color: var(--green);
+        background: #eaf8f0;
+        color: #17613a;
+        cursor: default;
+    }
+
+    .match-item.incorrect {
+        border-color: var(--red);
+        background: #fff0ef;
+        color: #8e2926;
+        cursor: default;
+    }
+
+    /* =====================================================
+       FEEDBACK
+    ===================================================== */
+
+    .feedback {
+        margin-top: 22px;
+        padding: 18px;
+        border-radius: 12px;
+        display: none;
+        line-height: 1.6;
+    }
+
+    .feedback.correct {
+        display: block;
+        background: #eaf8f0;
+        border-left: 5px solid var(--green);
+        color: #17613a;
+    }
+
+    .feedback.incorrect {
+        display: block;
+        background: #fff0ef;
+        border-left: 5px solid var(--red);
+        color: #8e2926;
+    }
+
+    .feedback strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .position-note {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 8px;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    button {
+        border: none;
+        border-radius: 12px;
+        padding: 14px 22px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.15s, opacity 0.15s;
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+    }
+
+    button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .btn-primary {
+        background: var(--navy);
+        color: white;
+    }
+
+    .btn-blue {
+        background: var(--blue);
+        color: white;
+    }
+
+    .btn-light {
+        background: #e9f2f8;
+        color: var(--navy);
+    }
+
+    .btn-green {
+        background: var(--green);
+        color: white;
+    }
+
+    .btn-red {
+        background: var(--red);
+        color: white;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    /* =====================================================
+       FINAL PAGE
+    ===================================================== */
+
+    .summary-header {
+        text-align: center;
+        padding: 10px 0 25px;
+    }
+
+    .score-circle {
+        width: 145px;
+        height: 145px;
+        border-radius: 50%;
+        background: var(--navy);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .score-circle .score {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .score-circle small {
+        color: #dbe9f3;
+    }
+
+    .summary-header h2 {
+        font-size: 30px;
+        margin: 10px 0;
+    }
+
+    .summary-header p {
+        color: var(--gray);
+    }
+
+    .summary-meta {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin: 20px 0;
+        color: var(--gray);
+        font-size: 14px;
+    }
+
+    .summary-meta strong {
+        color: var(--navy);
+    }
+
+    .summary-section {
+        margin-top: 30px;
+    }
+
+    .summary-section h3 {
+        border-bottom: 2px solid #e4edf3;
+        padding-bottom: 10px;
+    }
+
+    .summary-item {
+        padding: 17px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        border-left: 5px solid;
+        background: #f8fbfd;
+    }
+
+    .summary-item.correct {
+        border-color: var(--green);
+    }
+
+    .summary-item.incorrect {
+        border-color: var(--red);
+    }
+
+    .summary-item.skipped {
+        border-color: var(--gray);
+    }
+
+    .summary-question {
+        font-weight: bold;
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    .summary-answer {
+        color: #526174;
+        line-height: 1.5;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .status.correct {
+        color: var(--green);
+    }
+
+    .status.incorrect {
+        color: var(--red);
+    }
+
+    .status.skipped {
+        color: var(--gray);
+    }
+
+    .final-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+    }
+
+    .start-screen {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .start-screen h2 {
+        font-size: 30px;
+    }
+
+    .start-screen p {
+        max-width: 700px;
+        margin: 15px auto 25px;
+        line-height: 1.7;
+        color: var(--gray);
+    }
+
+    .topic-box {
+        display: inline-block;
+        padding: 12px 18px;
+        border-radius: 30px;
+        background: #eaf5fc;
+        color: var(--navy);
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .connector-categories {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        max-width: 750px;
+        margin: 25px auto;
+    }
+
+    .category-box {
+        padding: 15px;
+        border-radius: 12px;
+        background: #f8fbfd;
+        border: 1px solid #e1ebf2;
+    }
+
+    .category-box strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .category-box span {
+        font-size: 14px;
+        color: var(--gray);
+    }
+
+    .print-header {
+        display: none;
+    }
+
+    @media (max-width: 650px) {
+
+        .app {
+            padding: 15px 12px 40px;
+        }
+
+        header {
+            padding: 23px;
+        }
+
+        .card {
+            padding: 22px;
+        }
+
+        .question {
+            font-size: 20px;
+        }
+
+        .drag-sentence {
+            font-size: 19px;
+        }
+
+        .drop-zone {
+            min-width: 120px;
+        }
+
+        .matching-container {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .connector-categories {
+            grid-template-columns: 1fr;
+        }
+
+        .actions button,
+        .final-actions button {
+            width: 100%;
+        }
+    }
+
+    @media print {
+
+        body {
+            background: white;
+            color: #222;
+        }
+
+        .app {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        header,
+        .final-actions {
+            display: none !important;
+        }
+
+        .card,
+        .progress-area {
+            box-shadow: none;
+        }
+
+        .print-header {
+            display: block;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .print-header h1 {
+            margin: 0 0 6px;
+            font-size: 25px;
+        }
+
+        .print-header p {
+            margin: 0;
+            color: #666;
+        }
+
+        .summary-item {
+            break-inside: avoid;
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+        }
+
+        .score-circle .score {
+            font-size: 32px;
+        }
+
+        .summary-section {
+            break-inside: avoid;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <h1>Grammar Exercises</h1>
+    <p>D.C English Classes</p>
+</header>
+
+<!-- START SCREEN -->
+
+<section id="startScreen" class="card start-screen">
+
+    <div class="topic-box">Ability – could / couldn’t (past ability)</div>
+
+    <h2>Ready to practice?</h2>
+
+    <p>
+        In this exercise, you will practice <strong>Ability – could / couldn’t (past ability)</strong> in General English contexts (level A1).
+    </p>
+
+    <p>
+        There are <strong>50 questions</strong>: 10 multiple-choice, 10 fill-in-the-gaps, 8 unscramble-the-words, 7 drag-and-drop, 5 matching and 10 find-the-error questions.
+    </p>
+
+    <button class="btn-primary" onclick="startExercise()">
+        Começar exercício
+    </button>
+
+</section>
+
+
+<!-- EXERCISE -->
+
+<section id="exerciseScreen" class="hidden">
+
+    <div class="progress-area">
+
+        <div class="progress-top">
+            <span id="progressText">Question 1 of 50</span>
+            <span id="scoreText">Score: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div id="questionType" class="question-type"></div>
+
+        <div id="questionNumber" class="question-number"></div>
+
+        <h2 id="questionText" class="question"></h2>
+
+        <div id="instructions" class="instructions"></div>
+
+        <div id="answerArea"></div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div class="actions">
+
+            <button
+                id="answerBtn"
+                class="btn-primary"
+                onclick="checkAnswer()">
+                Responder
+            </button>
+
+            <button
+                id="skipBtn"
+                class="btn-light"
+                onclick="skipQuestion()">
+                Pular
+            </button>
+
+            <button
+                id="retryBtn"
+                class="btn-red hidden"
+                onclick="retryCurrentQuestion()">
+                Tentar novamente
+            </button>
+
+            <button
+                id="nextBtn"
+                class="btn-blue hidden"
+                onclick="nextQuestion()">
+                Próxima pergunta
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section id="summaryScreen" class="hidden">
+
+    <div class="card">
+
+        <div class="print-header">
+            <h1>Grammar Exercises</h1>
+            <p>D.C English Classes · General English · A1 · Ability – could / couldn’t (past ability)</p>
+        </div>
+
+        <div class="summary-header">
+
+            <div class="score-circle">
+                <span id="finalScore" class="score">0%</span>
+                <small>score</small>
+            </div>
+
+            <h2>Exercise completed!</h2>
+
+            <p>
+                Here is your complete answer summary.
+            </p>
+
+            <div class="summary-meta">
+
+                <span>
+                    <strong>Topic:</strong> Ability – could / couldn’t (past ability)
+                </span>
+
+                <span>
+                    <strong>Questions:</strong> 50
+                </span>
+
+                <span>
+                    <strong>Date:</strong>
+                    <span id="summaryDate"></span>
+                </span>
+
+            </div>
+
+        </div>
+
+        <div id="summaryContent"></div>
+
+        <div class="final-actions">
+
+            <button
+                class="btn-primary"
+                onclick="restartExercise()">
+                Tentar novamente
+            </button>
+
+            <button
+                class="btn-green"
+                onclick="savePDF()">
+                Salvar como PDF
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+<script>
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const originalQuestions = [
+    {
+        "type": "Multiple Choice",
+        "question": "When I was five, I _____ swim.",
+        "options": [
+            "can",
+            "could",
+            "cans",
+            "coulds"
+        ],
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "She _____ read when she was three.",
+        "options": [
+            "could",
+            "can",
+            "coulds",
+            "canned"
+        ],
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "He _____ ride a bike when he was four. He was too young.",
+        "options": [
+            "could",
+            "couldn't",
+            "can",
+            "can't"
+        ],
+        "answer": "couldn't",
+        "explanation": "He wasn't able to ride.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "_____ you speak English as a child?",
+        "options": [
+            "Could",
+            "Can",
+            "Do",
+            "Are"
+        ],
+        "answer": "Could",
+        "explanation": "Past ability question: Could...?",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "I couldn't _____ the answer.",
+        "options": [
+            "knew",
+            "know",
+            "knows",
+            "knowing"
+        ],
+        "answer": "know",
+        "explanation": "could/couldn't + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Which sentence is correct?",
+        "options": [
+            "I could swim at six.",
+            "I could swam at six.",
+            "I coulded swim at six.",
+            "I could to swim at six."
+        ],
+        "answer": "I could swim at six.",
+        "explanation": "could + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Could they play the piano? — Yes, _____.",
+        "options": [
+            "they could",
+            "they can",
+            "they were",
+            "they do"
+        ],
+        "answer": "they could",
+        "explanation": "Short answer repeats 'could'.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "Could you drive when you were ten? — No, _____.",
+        "options": [
+            "I couldn't",
+            "I can't",
+            "I don't",
+            "I wasn't"
+        ],
+        "answer": "I couldn't",
+        "explanation": "Short answer repeats 'couldn't'.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "'Couldn't' is the short form of...",
+        "options": [
+            "could not",
+            "can not",
+            "did not",
+            "would not"
+        ],
+        "answer": "could not",
+        "explanation": "couldn't = could not.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Multiple Choice",
+        "question": "When she was a baby, she _____ walk.",
+        "options": [
+            "couldn't",
+            "can't",
+            "doesn't",
+            "isn't"
+        ],
+        "answer": "couldn't",
+        "explanation": "Babies aren't able to walk.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "When I was six, I _____ swim.",
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "He _____ ride a bike at four.",
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "They _____ speak English as children. (negative)",
+        "answer": "couldn't",
+        "explanation": "Negative: couldn't.",
+        "acceptable": [
+            "couldn't",
+            "could not"
+        ],
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "_____ you play the guitar when you were ten?",
+        "answer": "Could",
+        "explanation": "Past ability question.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "Could"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "She couldn't _____ the book. It was too difficult.",
+        "answer": "read",
+        "explanation": "could/couldn't + base verb.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "read"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "Could he swim? — Yes, he _____.",
+        "answer": "could",
+        "explanation": "Short answer repeats 'could'.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "Could you drive at fifteen? — No, I _____.",
+        "answer": "couldn't",
+        "explanation": "Negative short answer.",
+        "acceptable": [
+            "couldn't",
+            "could not"
+        ],
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "We _____ not hear the teacher.",
+        "answer": "could",
+        "explanation": "could + not = could not.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "When I was a child, I _____ run very fast.",
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Fill in the Gaps",
+        "question": "_____ she speak French when she was ten?",
+        "answer": "Could",
+        "explanation": "Past ability question.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "Could"
+        ]
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "could / swim / I / five / at",
+        "answer": "I could swim at five.",
+        "explanation": "could + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "couldn't / he / ride / a / bike",
+        "answer": "He couldn't ride a bike.",
+        "explanation": "couldn't + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "could / you / swim / when / you / were / six",
+        "answer": "Could you swim when you were six?",
+        "explanation": "Could + subject + verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "she / read / could / three / at",
+        "answer": "She could read at three.",
+        "explanation": "could + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "couldn't / they / English / speak",
+        "answer": "They couldn't speak English.",
+        "explanation": "couldn't + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "could / the / hear / we / not / teacher",
+        "answer": "We could not hear the teacher.",
+        "explanation": "could not + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "baby / the / walk / couldn't",
+        "answer": "The baby couldn't walk.",
+        "explanation": "couldn't + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Unscramble the Words",
+        "question": "piano / could / play / the / he",
+        "answer": "He could play the piano.",
+        "explanation": "could + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the correct word.",
+        "sentenceBefore": "When I was six, I",
+        "sentenceAfter": "swim.",
+        "options": [
+            "could",
+            "can",
+            "coulds"
+        ],
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the correct word.",
+        "sentenceBefore": "He",
+        "sentenceAfter": "ride a bike at four.",
+        "options": [
+            "couldn't",
+            "can't",
+            "cans"
+        ],
+        "answer": "couldn't",
+        "explanation": "Too young, so he couldn't.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the correct word.",
+        "sentenceBefore": "",
+        "sentenceAfter": "you swim as a child?",
+        "options": [
+            "Could",
+            "Can",
+            "Do"
+        ],
+        "answer": "Could",
+        "explanation": "Past ability question.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the correct word.",
+        "sentenceBefore": "She",
+        "sentenceAfter": "read when she was three.",
+        "options": [
+            "could",
+            "can",
+            "coulds"
+        ],
+        "answer": "could",
+        "explanation": "Past ability: could.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the short answer.",
+        "sentenceBefore": "Could he swim? Yes, he",
+        "sentenceAfter": ".",
+        "options": [
+            "could",
+            "can",
+            "does"
+        ],
+        "answer": "could",
+        "explanation": "Repeat 'could'.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the short answer.",
+        "sentenceBefore": "Could you drive at ten? No, I",
+        "sentenceAfter": ".",
+        "options": [
+            "couldn't",
+            "can't",
+            "don't"
+        ],
+        "answer": "couldn't",
+        "explanation": "Repeat 'couldn't'.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Drag & Drop",
+        "question": "Choose the correct verb.",
+        "sentenceBefore": "They couldn't",
+        "sentenceAfter": "English.",
+        "options": [
+            "speak",
+            "spoke",
+            "speaks"
+        ],
+        "answer": "speak",
+        "explanation": "couldn't + base verb.",
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Matching",
+        "question": "Match each sentence to its meaning.",
+        "pairs": [
+            {
+                "left": "I could swim.",
+                "right": "I was able to swim."
+            },
+            {
+                "left": "I couldn't swim.",
+                "right": "I wasn't able to swim."
+            },
+            {
+                "left": "I can swim.",
+                "right": "I am able to swim now."
+            },
+            {
+                "left": "I can't swim.",
+                "right": "I am not able to swim now."
+            }
+        ],
+        "explanation": "Could = past; can = present.",
+        "category": "could / couldn't",
+        "answer": "I could swim. → I was able to swim., I couldn't swim. → I wasn't able to swim., I can swim. → I am able to swim now., I can't swim. → I am not able to swim now."
+    },
+    {
+        "type": "Matching",
+        "question": "Match each question to a short answer.",
+        "pairs": [
+            {
+                "left": "Could you swim at six?",
+                "right": "Yes, I could."
+            },
+            {
+                "left": "Could he read at three?",
+                "right": "No, he couldn't."
+            },
+            {
+                "left": "Could they play the piano?",
+                "right": "Yes, they could."
+            },
+            {
+                "left": "Could she drive at ten?",
+                "right": "No, she couldn't."
+            }
+        ],
+        "explanation": "Repeat could/couldn't.",
+        "category": "could / couldn't",
+        "answer": "Could you swim at six? → Yes, I could., Could he read at three? → No, he couldn't., Could they play the piano? → Yes, they could., Could she drive at ten? → No, she couldn't."
+    },
+    {
+        "type": "Matching",
+        "question": "Match each beginning to its ending.",
+        "pairs": [
+            {
+                "left": "When I was six,",
+                "right": "I could swim."
+            },
+            {
+                "left": "When he was a baby,",
+                "right": "he couldn't walk."
+            },
+            {
+                "left": "As a child,",
+                "right": "she could draw well."
+            },
+            {
+                "left": "At four,",
+                "right": "they couldn't read."
+            }
+        ],
+        "explanation": "Choose the logical ending.",
+        "category": "could / couldn't",
+        "answer": "When I was six, → I could swim., When he was a baby, → he couldn't walk., As a child, → she could draw well., At four, → they couldn't read."
+    },
+    {
+        "type": "Matching",
+        "question": "Match each present form to its past form.",
+        "pairs": [
+            {
+                "left": "can",
+                "right": "could"
+            },
+            {
+                "left": "can't",
+                "right": "couldn't"
+            },
+            {
+                "left": "can I?",
+                "right": "could I?"
+            },
+            {
+                "left": "can he?",
+                "right": "could he?"
+            }
+        ],
+        "explanation": "Could is the past of can.",
+        "category": "could / couldn't",
+        "answer": "can → could, can't → couldn't, can I? → could I?, can he? → could he?"
+    },
+    {
+        "type": "Matching",
+        "question": "Match each full form to its short form.",
+        "pairs": [
+            {
+                "left": "could not",
+                "right": "couldn't"
+            },
+            {
+                "left": "cannot",
+                "right": "can't"
+            },
+            {
+                "left": "did not",
+                "right": "didn't"
+            },
+            {
+                "left": "was not",
+                "right": "wasn't"
+            }
+        ],
+        "explanation": "Short forms join the verb and 'not'.",
+        "category": "could / couldn't",
+        "answer": "could not → couldn't, cannot → can't, did not → didn't, was not → wasn't"
+    },
+    {
+        "type": "Find the Error",
+        "question": "I can swim when I was five.",
+        "answer": "could",
+        "explanation": "Past time needs 'could'.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "She could reads at three.",
+        "answer": "read",
+        "explanation": "After 'could' use the base verb.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "read"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "He couldn't to swim.",
+        "answer": "swim",
+        "explanation": "After 'couldn't' use the base verb.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "swim"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "Can you swim when you were six?",
+        "answer": "Could",
+        "explanation": "Past time needs 'Could'.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "Could"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "They coulded play the piano.",
+        "answer": "could",
+        "explanation": "'Could' is already past.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "I could not understood the teacher.",
+        "answer": "understand",
+        "explanation": "After 'could not' use the base verb.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "understand"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "Could she to dance?",
+        "answer": "dance",
+        "explanation": "After 'could' use the base verb.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "dance"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "When he was a baby, he can't walk.",
+        "answer": "couldn't",
+        "explanation": "Past time needs 'couldn't'.",
+        "acceptable": [
+            "couldn't",
+            "could not"
+        ],
+        "category": "could / couldn't"
+    },
+    {
+        "type": "Find the Error",
+        "question": "She couldn't swam at six.",
+        "answer": "swim",
+        "explanation": "After 'couldn't' use the base verb.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "swim"
+        ]
+    },
+    {
+        "type": "Find the Error",
+        "question": "We cans speak French as children.",
+        "answer": "could",
+        "explanation": "Past ability needs 'could'.",
+        "category": "could / couldn't",
+        "acceptable": [
+            "could"
+        ]
+    }
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+let answered = false;
+
+let draggedConnector = null;
+
+let selectedMatchLeft = null;
+let matchingPairs = {};
+let matchingRightOrder = [];
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
+
+function shuffleArray(array) {
+
+    const copy = [...array];
+
+    for (let i = copy.length - 1; i > 0; i--) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [copy[i], copy[j]] =
+            [copy[j], copy[i]];
+    }
+
+    return copy;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function startExercise() {
+
+    currentQuestion = 0;
+    score = 0;
+    answers = [];
+    answered = false;
+
+    questions =
+        shuffleArray(originalQuestions)
+            .map(q => {
+
+                const copy = {...q};
+
+                if (copy.options) {
+
+                    copy.options =
+                        shuffleArray(
+                            copy.options
+                        );
+                }
+
+                return copy;
+            });
+
+    document.getElementById("startScreen")
+        .classList.add("hidden");
+
+    document.getElementById("summaryScreen")
+        .classList.add("hidden");
+
+    document.getElementById("exerciseScreen")
+        .classList.remove("hidden");
+
+    loadQuestion();
+}
+
+
+/* =========================================================
+   LOAD QUESTION
+========================================================= */
+
+function loadQuestion() {
+
+    answered = false;
+
+    draggedConnector = null;
+
+    selectedMatchLeft = null;
+    matchingPairs = {};
+    matchingRightOrder = [];
+
+    const q =
+        questions[currentQuestion];
+
+    document.getElementById("questionType")
+        .textContent = q.type;
+
+    document.getElementById("questionNumber")
+        .textContent =
+        `Question ${currentQuestion + 1}`;
+
+    document.getElementById("questionText")
+        .textContent = q.question;
+
+    document.getElementById("progressText")
+        .textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("scoreText")
+        .textContent =
+        `Score: ${score}`;
+
+    const progress =
+        (currentQuestion / questions.length) * 100;
+
+    document.getElementById("progressFill")
+        .style.width =
+        `${progress}%`;
+
+    const instructions =
+        document.getElementById("instructions");
+
+    const answerArea =
+        document.getElementById("answerArea");
+
+    const feedback =
+        document.getElementById("feedback");
+
+    feedback.className = "feedback";
+    feedback.innerHTML = "";
+
+    answerArea.innerHTML = "";
+
+
+    /* =====================================================
+       MULTIPLE CHOICE
+    ===================================================== */
+
+    if (q.type === "Multiple Choice") {
+
+        instructions.textContent =
+            "Choose the correct answer.";
+
+        const options =
+            document.createElement("div");
+
+        options.className = "options";
+
+        q.options.forEach(
+            (option, index) => {
+
+                const button =
+                    document.createElement("div");
+
+                button.className =
+                    "option";
+
+                button.textContent =
+                    `${String.fromCharCode(65 + index)}. ${option}`;
+
+                button.dataset.value =
+                    option;
+
+                button.onclick =
+                    function() {
+
+                        if (answered) return;
+
+                        document.querySelectorAll(
+                            ".option"
+                        ).forEach(el =>
+                            el.classList.remove(
+                                "selected"
+                            )
+                        );
+
+                        button.classList.add(
+                            "selected"
+                        );
+                    };
+
+                options.appendChild(button);
+            }
+        );
+
+        answerArea.appendChild(options);
+    }
+
+
+    /* =====================================================
+       FILL IN THE GAPS
+    ===================================================== */
+
+    else if (q.type === "Fill in the Gaps") {
+
+        instructions.textContent =
+            "Type the correct answer.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type your answer here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       FIND THE ERROR
+    ===================================================== */
+
+    else if (q.type === "Find the Error") {
+
+        instructions.textContent =
+            "Find the mistake and type the correct word.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type the correction here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       UNSCRAMBLE
+    ===================================================== */
+
+    else if (
+        q.type === "Unscramble the Words"
+    ) {
+
+        instructions.textContent =
+            "Rearrange the words to create a correct sentence.";
+
+        const input =
+            document.createElement("input");
+
+        input.type = "text";
+
+        input.className =
+            "text-answer";
+
+        input.id =
+            "textAnswer";
+
+        input.placeholder =
+            "Type the complete sentence here";
+
+        answerArea.appendChild(input);
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+    }
+
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    else if (
+        q.type === "Drag & Drop"
+    ) {
+
+        instructions.textContent =
+            "Drag the correct answer into the blank.";
+
+
+        /* ---------- SENTENCE ---------- */
+
+        const sentence =
+            document.createElement("div");
+
+        sentence.className =
+            "drag-sentence";
+
+
+        if (q.sentenceBefore) {
+
+            sentence.appendChild(
+                document.createTextNode(
+                    q.sentenceBefore + " "
+                )
+            );
+        }
+
+
+        /* ---------- DROP ZONE ---------- */
+
+        const dropZone =
+            document.createElement("span");
+
+        dropZone.className =
+            "drop-zone";
+
+        dropZone.id =
+            "dropZone";
+
+        dropZone.textContent =
+            "Drop here";
+
+        sentence.appendChild(
+            dropZone
+        );
+
+
+        if (q.sentenceAfter) {
+
+            sentence.appendChild(
+                document.createTextNode(
+                    " " + q.sentenceAfter
+                )
+            );
+        }
+
+
+        answerArea.appendChild(
+            sentence
+        );
+
+
+        /* ---------- OPTIONS ---------- */
+
+        const dragOptions =
+            document.createElement("div");
+
+        dragOptions.className =
+            "drag-options";
+
+
+        q.options.forEach(
+            option => {
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "drag-option";
+
+                item.textContent =
+                    option;
+
+                item.dataset.value =
+                    option;
+
+                item.setAttribute(
+                    "draggable",
+                    "true"
+                );
+
+
+                /* =========================
+                   DRAG START
+                ========================= */
+
+                item.addEventListener(
+                    "dragstart",
+                    function(event) {
+
+                        if (answered) {
+
+                            event.preventDefault();
+
+                            return;
+                        }
+
+                        draggedConnector =
+                            option;
+
+                        event.dataTransfer.effectAllowed =
+                            "copy";
+
+                        event.dataTransfer.setData(
+                            "text/plain",
+                            option
+                        );
+
+                        item.classList.add(
+                            "dragging"
+                        );
+                    }
+                );
+
+
+                /* =========================
+                   DRAG END
+                ========================= */
+
+                item.addEventListener(
+                    "dragend",
+                    function() {
+
+                        item.classList.remove(
+                            "dragging"
+                        );
+
+                        draggedConnector =
+                            null;
+
+                        dropZone.classList.remove(
+                            "drag-over"
+                        );
+                    }
+                );
+
+
+                /*
+                   IMPORTANT:
+                   There is NO click event here.
+                   The option must be dragged.
+                */
+
+
+                dragOptions.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        answerArea.appendChild(
+            dragOptions
+        );
+
+
+        /* ---------- HINT ---------- */
+
+        const hint =
+            document.createElement("div");
+
+        hint.className =
+            "drag-hint";
+
+        hint.textContent =
+            "Drag one of the options into the blank.";
+
+        answerArea.appendChild(
+            hint
+        );
+
+
+        /* =========================
+           DRAG OVER
+        ========================= */
+
+        dropZone.addEventListener(
+            "dragover",
+            function(event) {
+
+                if (answered) return;
+
+                event.preventDefault();
+
+                event.dataTransfer.dropEffect =
+                    "copy";
+
+                dropZone.classList.add(
+                    "drag-over"
+                );
+            }
+        );
+
+
+        /* =========================
+           DRAG LEAVE
+        ========================= */
+
+        dropZone.addEventListener(
+            "dragleave",
+            function() {
+
+                dropZone.classList.remove(
+                    "drag-over"
+                );
+            }
+        );
+
+
+        /* =========================
+           DROP
+        ========================= */
+
+        dropZone.addEventListener(
+            "drop",
+            function(event) {
+
+                if (answered) return;
+
+                event.preventDefault();
+
+                dropZone.classList.remove(
+                    "drag-over"
+                );
+
+                const value =
+                    event.dataTransfer.getData(
+                        "text/plain"
+                    ) ||
+                    draggedConnector;
+
+                if (!value) return;
+
+                placeConnector(value);
+            }
+        );
+    }
+
+
+    /* =====================================================
+       MATCHING
+    ===================================================== */
+
+    else if (
+        q.type === "Matching"
+    ) {
+
+        instructions.textContent =
+            "Tap an item on the left, then tap its match on the right.";
+
+        matchingRightOrder =
+            shuffleArray(
+                q.pairs.map(
+                    p => p.right
+                )
+            );
+
+        const container =
+            document.createElement("div");
+
+        container.className =
+            "matching-container";
+
+        const leftCol =
+            document.createElement("div");
+
+        leftCol.className =
+            "match-column";
+
+        const rightCol =
+            document.createElement("div");
+
+        rightCol.className =
+            "match-column";
+
+        container.appendChild(leftCol);
+        container.appendChild(rightCol);
+
+        answerArea.appendChild(container);
+
+        const hint =
+            document.createElement("div");
+
+        hint.className =
+            "drag-hint";
+
+        hint.textContent =
+            "Tap items to pair them. Tap a paired item again to change it.";
+
+        answerArea.appendChild(hint);
+
+        renderMatchingColumns(
+            q,
+            leftCol,
+            rightCol
+        );
+    }
+
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    document.getElementById("answerBtn")
+        .classList.remove("hidden");
+
+    document.getElementById("skipBtn")
+        .classList.remove("hidden");
+
+    document.getElementById("retryBtn")
+        .classList.add("hidden");
+
+    document.getElementById("nextBtn")
+        .classList.add("hidden");
+
+    document.getElementById("nextBtn")
+        .textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+}
+
+
+/* =========================================================
+   PLACE CONNECTOR
+========================================================= */
+
+function placeConnector(value) {
+
+    if (!value || answered) return;
+
+    const dropZone =
+        document.getElementById("dropZone");
+
+    if (!dropZone) return;
+
+    dropZone.textContent =
+        value;
+
+    dropZone.classList.add(
+        "filled"
+    );
+
+
+    document.querySelectorAll(
+        ".drag-option"
+    ).forEach(option => {
+
+        option.classList.remove(
+            "selected"
+        );
+
+        if (
+            option.dataset.value ===
+            value
+        ) {
+
+            option.classList.add(
+                "selected"
+            );
+        }
+    });
+}
+
+
+/* =========================================================
+   RENDER MATCHING COLUMNS
+========================================================= */
+
+function renderMatchingColumns(
+    q,
+    leftCol,
+    rightCol
+) {
+
+    leftCol.innerHTML = "";
+    rightCol.innerHTML = "";
+
+    q.pairs.forEach(
+        pair => {
+
+            const item =
+                document.createElement("button");
+
+            item.type = "button";
+
+            item.className =
+                "match-item match-left";
+
+            if (
+                selectedMatchLeft ===
+                pair.left
+            ) {
+
+                item.classList.add(
+                    "selected"
+                );
+            }
+
+            if (
+                matchingPairs[pair.left] !==
+                undefined
+            ) {
+
+                item.classList.add(
+                    "paired"
+                );
+            }
+
+            item.textContent =
+                pair.left;
+
+            item.dataset.value =
+                pair.left;
+
+            item.onclick =
+                function() {
+
+                    if (answered) return;
+
+                    selectedMatchLeft =
+                        pair.left;
+
+                    renderMatchingColumns(
+                        q,
+                        leftCol,
+                        rightCol
+                    );
+                };
+
+            leftCol.appendChild(item);
+        }
+    );
+
+    matchingRightOrder.forEach(
+        rightValue => {
+
+            const item =
+                document.createElement("button");
+
+            item.type = "button";
+
+            item.className =
+                "match-item match-right";
+
+            const pairedLeft =
+                Object.keys(
+                    matchingPairs
+                ).find(
+                    left =>
+                        matchingPairs[left] ===
+                        rightValue
+                );
+
+            if (pairedLeft) {
+
+                item.classList.add(
+                    "paired"
+                );
+            }
+
+            item.textContent =
+                rightValue;
+
+            item.dataset.value =
+                rightValue;
+
+            item.onclick =
+                function() {
+
+                    if (answered) return;
+
+                    if (!selectedMatchLeft) return;
+
+                    const previousLeft =
+                        Object.keys(
+                            matchingPairs
+                        ).find(
+                            left =>
+                                matchingPairs[left] ===
+                                rightValue
+                        );
+
+                    if (previousLeft) {
+
+                        delete matchingPairs[
+                            previousLeft
+                        ];
+                    }
+
+                    matchingPairs[
+                        selectedMatchLeft
+                    ] = rightValue;
+
+                    selectedMatchLeft = null;
+
+                    renderMatchingColumns(
+                        q,
+                        leftCol,
+                        rightCol
+                    );
+                };
+
+            rightCol.appendChild(item);
+        }
+    );
+}
+
+
+/* =========================================================
+   CHECK ANSWER
+========================================================= */
+
+function checkAnswer() {
+
+    if (answered) return;
+
+    const q =
+        questions[currentQuestion];
+
+    let userAnswer = "";
+    let isCorrect = false;
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if (q.type === "Multiple Choice") {
+
+        const selected =
+            document.querySelector(
+                ".option.selected"
+            );
+
+        if (!selected) {
+
+            alert(
+                "Please choose an answer before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            selected.dataset.value;
+
+        isCorrect =
+            normalizeText(userAnswer) ===
+            normalizeText(q.answer);
+    }
+
+
+    /* ================= TEXT ANSWERS ================= */
+
+    else if (
+        q.type === "Fill in the Gaps" ||
+        q.type === "Unscramble the Words" ||
+        q.type === "Find the Error"
+    ) {
+
+        const input =
+            document.getElementById(
+                "textAnswer"
+            );
+
+        if (
+            !input ||
+            !input.value.trim()
+        ) {
+
+            alert(
+                "Please type an answer before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            input.value.trim();
+
+
+        if (
+            q.type ===
+            "Fill in the Gaps" ||
+            q.type ===
+            "Find the Error"
+        ) {
+
+            const normalized =
+                normalizeText(
+                    userAnswer
+                );
+
+            const acceptableList =
+                q.acceptable ||
+                [q.answer];
+
+            isCorrect =
+                acceptableList.some(
+                    answer =>
+                        normalizeText(answer) ===
+                        normalized
+                );
+
+        } else {
+
+            isCorrect =
+                checkUnscramble(
+                    userAnswer,
+                    q
+                );
+        }
+    }
+
+
+    /* ================= DRAG & DROP ================= */
+
+    else if (
+        q.type === "Drag & Drop"
+    ) {
+
+        const dropZone =
+            document.getElementById(
+                "dropZone"
+            );
+
+        if (
+            !dropZone ||
+            !dropZone.classList.contains(
+                "filled"
+            )
+        ) {
+
+            alert(
+                "Please drag an option into the blank before clicking Responder."
+            );
+
+            return;
+        }
+
+        userAnswer =
+            dropZone.textContent.trim();
+
+        isCorrect =
+            normalizeText(userAnswer) ===
+            normalizeText(q.answer);
+    }
+
+
+    /* ================= MATCHING ================= */
+
+    else if (
+        q.type === "Matching"
+    ) {
+
+        if (
+            Object.keys(matchingPairs).length <
+            q.pairs.length
+        ) {
+
+            alert(
+                "Please match every item before clicking Responder."
+            );
+
+            return;
+        }
+
+        isCorrect =
+            q.pairs.every(
+                pair =>
+                    matchingPairs[pair.left] ===
+                    pair.right
+            );
+
+        userAnswer =
+            q.pairs.map(
+                pair =>
+                    `${pair.left} → ${matchingPairs[pair.left]}`
+            ).join(", ");
+    }
+
+
+    answered = true;
+
+
+    /* =====================================================
+       POINT CONTROL
+    ===================================================== */
+
+    const previous =
+        answers[currentQuestion];
+
+    if (
+        isCorrect &&
+        (!previous ||
+        !previous.pointAwarded)
+    ) {
+
+        score++;
+    }
+
+
+    answers[currentQuestion] = {
+
+        userAnswer:
+            userAnswer,
+
+        correct:
+            isCorrect,
+
+        skipped:
+            false,
+
+        pointAwarded:
+            (
+                isCorrect ||
+                (
+                    previous &&
+                    previous.pointAwarded
+                )
+            )
+    };
+
+
+    showFeedback(
+        isCorrect,
+        q
+    );
+
+
+    document.getElementById(
+        "answerBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "skipBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "retryBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+
+    updateScoreDisplay();
+}
+
+
+/* =========================================================
+   UNSCRAMBLE CHECK
+========================================================= */
+
+function checkUnscramble(
+    userAnswer,
+    q
+) {
+
+    const clean =
+        normalizeSentence(
+            userAnswer
+        );
+
+    const expected =
+        normalizeSentence(
+            q.answer
+        );
+
+    return clean === expected;
+}
+
+
+function normalizeSentence(text) {
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[.,!?;:]/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+/* =========================================================
+   NORMALIZE
+========================================================= */
+
+function normalizeText(text) {
+
+    return String(text)
+        .toLowerCase()
+        .trim()
+        .replace(
+            /[.,!?;:]/g,
+            ""
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+function showFeedback(
+    isCorrect,
+    q
+) {
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    if (isCorrect) {
+
+        feedback.className =
+            "feedback correct";
+
+        feedback.innerHTML = `
+
+            <strong>✓ Correct!</strong>
+
+            ${q.explanation}
+
+            ${
+                q.positionExplanation
+                    ? `
+                    <div class="position-note">
+                        ${q.positionExplanation}
+                    </div>
+                    `
+                    : ""
+            }
+
+        `;
+
+    } else {
+
+        feedback.className =
+            "feedback incorrect";
+
+        feedback.innerHTML = `
+
+            <strong>✗ Incorrect.</strong>
+
+            ${q.explanation}
+
+            <br>
+
+            <strong>Correct answer:</strong>
+            ${escapeHTML(q.answer)}
+
+            ${
+                q.positionExplanation
+                    ? `
+                    <div class="position-note">
+                        ${q.positionExplanation}
+                    </div>
+                    `
+                    : ""
+            }
+
+        `;
+    }
+
+
+    /* ================= MULTIPLE CHOICE ================= */
+
+    if (
+        q.type === "Multiple Choice"
+    ) {
+
+        document.querySelectorAll(
+            ".option"
+        ).forEach(option => {
+
+            if (
+                normalizeText(
+                    option.dataset.value
+                ) ===
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "correct"
+                );
+            }
+
+            if (
+                option.classList.contains(
+                    "selected"
+                ) &&
+                normalizeText(
+                    option.dataset.value
+                ) !==
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "incorrect"
+                );
+            }
+        });
+    }
+
+
+    /* ================= DRAG & DROP ================= */
+
+    if (
+        q.type === "Drag & Drop"
+    ) {
+
+        document.querySelectorAll(
+            ".drag-option"
+        ).forEach(option => {
+
+            if (
+                normalizeText(
+                    option.dataset.value
+                ) ===
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "correct"
+                );
+            }
+
+            if (
+                option.classList.contains(
+                    "selected"
+                ) &&
+                normalizeText(
+                    option.dataset.value
+                ) !==
+                normalizeText(
+                    q.answer
+                )
+            ) {
+
+                option.classList.add(
+                    "incorrect"
+                );
+            }
+        });
+    }
+
+
+    /* ================= MATCHING ================= */
+
+    if (
+        q.type === "Matching"
+    ) {
+
+        document.querySelectorAll(
+            ".match-left"
+        ).forEach(el => {
+
+            const left =
+                el.dataset.value;
+
+            const correctRight =
+                q.pairs.find(
+                    p => p.left === left
+                ).right;
+
+            const givenRight =
+                matchingPairs[left];
+
+            el.classList.add(
+                givenRight === correctRight
+                    ? "correct"
+                    : "incorrect"
+            );
+        });
+
+        document.querySelectorAll(
+            ".match-right"
+        ).forEach(el => {
+
+            const right =
+                el.dataset.value;
+
+            const pairedLeft =
+                Object.keys(
+                    matchingPairs
+                ).find(
+                    left =>
+                        matchingPairs[left] ===
+                        right
+                );
+
+            if (!pairedLeft) return;
+
+            const correctRight =
+                q.pairs.find(
+                    p => p.left === pairedLeft
+                ).right;
+
+            el.classList.add(
+                right === correctRight
+                    ? "correct"
+                    : "incorrect"
+            );
+        });
+    }
+}
+
+
+/* =========================================================
+   SKIP
+========================================================= */
+
+function skipQuestion() {
+
+    if (answered) return;
+
+    const q =
+        questions[currentQuestion];
+
+    answered = true;
+
+    answers[currentQuestion] = {
+
+        userAnswer:
+            "Pulo",
+
+        correct:
+            false,
+
+        skipped:
+            true,
+
+        pointAwarded:
+            false
+    };
+
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+    feedback.className =
+        "feedback incorrect";
+
+    feedback.innerHTML = `
+
+        <strong>Question skipped.</strong>
+
+        This question counts as incorrect in the final score.
+
+        <br><br>
+
+        <strong>Correct answer:</strong>
+        ${escapeHTML(q.answer)}
+
+        <br><br>
+
+        ${q.explanation}
+
+        ${
+            q.positionExplanation
+                ? `
+                <div class="position-note">
+                    ${q.positionExplanation}
+                </div>
+                `
+                : ""
+        }
+
+    `;
+
+
+    document.getElementById(
+        "answerBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "skipBtn"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "retryBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "nextBtn"
+    ).textContent =
+        currentQuestion ===
+        questions.length - 1
+            ? "Ver resumo"
+            : "Próxima pergunta";
+}
+
+
+/* =========================================================
+   RETRY
+========================================================= */
+
+function retryCurrentQuestion() {
+
+    const previousAnswer =
+        answers[currentQuestion];
+
+    loadQuestion();
+
+    /*
+       If the question was previously correct,
+       the point remains in the score.
+    */
+
+    if (
+        previousAnswer &&
+        previousAnswer.pointAwarded
+    ) {
+
+        updateScoreDisplay();
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+========================================================= */
+
+function nextQuestion() {
+
+    if (!answered) {
+        return;
+    }
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        currentQuestion++;
+
+        loadQuestion();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    } else {
+
+        showSummary();
+    }
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+function updateScoreDisplay() {
+
+    document.getElementById(
+        "scoreText"
+    ).textContent =
+        `Score: ${score}`;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function showSummary() {
+
+    document.getElementById(
+        "exerciseScreen"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "summaryScreen"
+    ).classList.remove("hidden");
+
+
+    const percentage =
+        Math.round(
+            (score /
+            questions.length) *
+            100
+        );
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        `${percentage}%`;
+
+
+    const now =
+        new Date();
+
+    document.getElementById(
+        "summaryDate"
+    ).textContent =
+        now.toLocaleDateString(
+            "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+
+    const summaryContent =
+        document.getElementById(
+            "summaryContent"
+        );
+
+    summaryContent.innerHTML = "";
+
+
+    let currentSection = "";
+
+
+    questions.forEach(
+        (q, index) => {
+
+            const result =
+                answers[index] || {
+
+                    userAnswer:
+                        "Pulo",
+
+                    correct:
+                        false,
+
+                    skipped:
+                        true
+                };
+
+
+            if (
+                q.type !==
+                currentSection
+            ) {
+
+                currentSection =
+                    q.type;
+
+                const section =
+                    document.createElement(
+                        "div"
+                    );
+
+                section.className =
+                    "summary-section";
+
+                const heading =
+                    document.createElement(
+                        "h3"
+                    );
+
+                heading.textContent =
+                    q.type;
+
+                section.appendChild(
+                    heading
+                );
+
+                summaryContent.appendChild(
+                    section
+                );
+            }
+
+
+            const section =
+                summaryContent.lastElementChild;
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            let statusClass =
+                "incorrect";
+
+            let statusText =
+                "Incorrect";
+
+
+            if (
+                result.skipped
+            ) {
+
+                statusClass =
+                    "skipped";
+
+                statusText =
+                    "Pulo";
+
+            } else if (
+                result.correct
+            ) {
+
+                statusClass =
+                    "correct";
+
+                statusText =
+                    "Correct";
+            }
+
+
+            item.className =
+                `summary-item ${statusClass}`;
+
+
+            const displayedUserAnswer =
+                result.skipped
+                    ? "Pulo"
+                    : (
+                        result.userAnswer ||
+                        "—"
+                    );
+
+
+            item.innerHTML = `
+
+                <div class="summary-question">
+                    ${index + 1}. ${escapeHTML(q.question)}
+                </div>
+
+                <div class="summary-answer">
+
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                    <br>
+
+                    <strong>Your answer:</strong>
+                    ${escapeHTML(displayedUserAnswer)}
+
+                    <br>
+
+                    <strong>Correct answer:</strong>
+                    ${escapeHTML(q.answer)}
+
+                </div>
+
+            `;
+
+
+            section.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+
+/* =========================================================
+   RESTART
+========================================================= */
+
+function restartExercise() {
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answers = [];
+
+    answered = false;
+
+    draggedConnector = null;
+
+    questions =
+        shuffleArray(
+            originalQuestions
+        ).map(q => {
+
+            const copy =
+                {...q};
+
+            if (copy.options) {
+
+                copy.options =
+                    shuffleArray(
+                        copy.options
+                    );
+            }
+
+            return copy;
+        });
+
+
+    document.getElementById(
+        "summaryScreen"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "exerciseScreen"
+    ).classList.remove("hidden");
+
+    loadQuestion();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   SAVE AS PDF
+========================================================= */
+
+function savePDF() {
+
+    window.print();
+}
+
+</script>
+
+</body>
+</html>
