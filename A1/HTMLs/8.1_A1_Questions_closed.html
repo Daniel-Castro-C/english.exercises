@@ -697,6 +697,73 @@
             break-inside: avoid;
         }
     }
+
+    /* ===== SETS ===== */
+    .info-note {
+        background: var(--light);
+        border-left: 4px solid var(--blue);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin: 18px 0 6px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.55;
+    }
+    .set-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+    }
+    .set-btn {
+        padding: 18px 12px;
+        font-size: 18px;
+    }
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(38, 53, 88, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 9999;
+    }
+    .modal-box {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 28px 24px;
+        max-width: 380px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    }
+    .modal-box h3 {
+        margin: 0 0 20px;
+        font-size: 20px;
+        color: var(--navy);
+    }
+    .modal-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    /* ===== LOGO ===== */
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .brand-logo {
+        height: 38px;
+        width: auto;
+        display: block;
+    }
+    .print-logo {
+        height: 50px;
+        margin: 0 auto 10px;
+    }
 </style>
 
 </head>
@@ -707,7 +774,7 @@
 
 <header>
     <h1>Grammar Exercises</h1>
-    <p>D.C English Classes</p>
+    <p class="brand"><img class="brand-logo" src="data:image/png;base64,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" alt="D.C English Classes logo"><span>D.C English Classes</span></p>
 </header>
 
 <!-- START SCREEN -->
@@ -723,12 +790,20 @@
     </p>
 
     <p>
-        There are <strong>50 questions</strong>: 10 multiple-choice, 10 fill-in-the-gaps, 8 unscramble-the-words, 7 drag-and-drop, 5 matching and 10 find-the-error questions.
+        Each set contains <strong>10 questions</strong>.
     </p>
 
-    <button class="btn-primary" onclick="startExercise()">
-        Começar exercício
-    </button>
+    <div class="info-note">
+        You don't have to complete all 50 questions at once. Choose any set to start and come back whenever you like: for example, do Set 1 today and Set 2 tomorrow. You can also redo any set as many times as you want.
+    </div>
+
+    <div class="set-grid">
+        <button class="btn-primary set-btn" onclick="startSet(0)">Set 1</button>
+        <button class="btn-primary set-btn" onclick="startSet(1)">Set 2</button>
+        <button class="btn-primary set-btn" onclick="startSet(2)">Set 3</button>
+        <button class="btn-primary set-btn" onclick="startSet(3)">Set 4</button>
+        <button class="btn-primary set-btn" onclick="startSet(4)">Set 5</button>
+    </div>
 
 </section>
 
@@ -740,7 +815,7 @@
     <div class="progress-area">
 
         <div class="progress-top">
-            <span id="progressText">Question 1 of 50</span>
+            <span id="progressText">Question 1 of 10</span>
             <span id="scoreText">Score: 0</span>
         </div>
 
@@ -794,6 +869,13 @@
                 Próxima pergunta
             </button>
 
+            <button
+                id="finishBtn"
+                class="btn-green"
+                onclick="openFinishModal()">
+                Finalizar exercício
+            </button>
+
         </div>
 
     </div>
@@ -808,8 +890,9 @@
     <div class="card">
 
         <div class="print-header">
+            <img class="brand-logo print-logo" src="data:image/png;base64,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" alt="">
             <h1>Grammar Exercises</h1>
-            <p>D.C English Classes · General English · A1 · Questions – closed</p>
+            <p>D.C English Classes · General English · A1 · Questions – closed<span id="printSet"></span></p>
         </div>
 
         <div class="summary-header">
@@ -819,7 +902,7 @@
                 <small>score</small>
             </div>
 
-            <h2>Exercise completed!</h2>
+            <h2 id="summaryTitle">Set completed!</h2>
 
             <p>
                 Here is your complete answer summary.
@@ -832,7 +915,11 @@
                 </span>
 
                 <span>
-                    <strong>Questions:</strong> 50
+                    <strong>Set:</strong> <span id="summarySet"></span>
+                </span>
+
+                <span>
+                    <strong>Questions:</strong> <span id="summaryQuestions">10</span>
                 </span>
 
                 <span>
@@ -855,6 +942,12 @@
             </button>
 
             <button
+                class="btn-light"
+                onclick="backToSets()">
+                Voltar aos sets
+            </button>
+
+            <button
                 class="btn-green"
                 onclick="savePDF()">
                 Salvar como PDF
@@ -866,6 +959,16 @@
 
 </section>
 
+</div>
+
+<div id="finishModal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3>Tem certeza que deseja finalizar o exercício?</h3>
+        <div class="modal-actions">
+            <button class="btn-primary" onclick="confirmFinish()">Sim</button>
+            <button class="btn-light" onclick="closeFinishModal()">Não</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -1506,6 +1609,9 @@ const originalQuestions = [
 ========================================================= */
 
 let questions = [];
+let finishedEarly = false;
+let currentSet = 0;
+const SET_COUNT = 5;
 let currentQuestion = 0;
 let score = 0;
 let answers = [];
@@ -1545,40 +1651,38 @@ function shuffleArray(array) {
    START
 ========================================================= */
 
-function startExercise() {
+function prepareQuestions(list) {
+    return shuffleArray(list).map(q => {
+        const copy = {...q};
+        if (copy.options) {
+            copy.options = shuffleArray(copy.options);
+        }
+        return copy;
+    });
+}
 
+function setQuestions(b) {
+    return originalQuestions.filter(
+        (_, i) => i % SET_COUNT === b
+    );
+}
+
+function startSet(b) {
+    currentSet = b;
+    finishedEarly = false;
     currentQuestion = 0;
     score = 0;
     answers = [];
     answered = false;
+    draggedConnector = null;
+    questions = prepareQuestions(setQuestions(b));
 
-    questions =
-        shuffleArray(originalQuestions)
-            .map(q => {
-
-                const copy = {...q};
-
-                if (copy.options) {
-
-                    copy.options =
-                        shuffleArray(
-                            copy.options
-                        );
-                }
-
-                return copy;
-            });
-
-    document.getElementById("startScreen")
-        .classList.add("hidden");
-
-    document.getElementById("summaryScreen")
-        .classList.add("hidden");
-
-    document.getElementById("exerciseScreen")
-        .classList.remove("hidden");
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("summaryScreen").classList.add("hidden");
+    document.getElementById("exerciseScreen").classList.remove("hidden");
 
     loadQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 
@@ -1611,7 +1715,7 @@ function loadQuestion() {
 
     document.getElementById("progressText")
         .textContent =
-        `Question ${currentQuestion + 1} of ${questions.length}`;
+        `Set ${currentSet + 1} · Question ${currentQuestion + 1} of ${questions.length}`;
 
     document.getElementById("scoreText")
         .textContent =
@@ -3012,6 +3116,22 @@ function updateScoreDisplay() {
 
 function showSummary() {
 
+    const answeredCount =
+        answers.filter(Boolean).length;
+    const denom =
+        finishedEarly ? answeredCount : questions.length;
+    document.getElementById("summaryQuestions").textContent =
+        finishedEarly
+            ? `${answeredCount} of ${questions.length} answered`
+            : questions.length;
+
+    document.getElementById("summaryTitle").textContent =
+        `Set ${currentSet + 1} completed!`;
+    document.getElementById("summarySet").textContent =
+        currentSet + 1;
+    const pb = document.getElementById("printSet");
+    if (pb) { pb.textContent = ` · Set ${currentSet + 1}`; }
+
     document.getElementById(
         "exerciseScreen"
     ).classList.add("hidden");
@@ -3022,11 +3142,7 @@ function showSummary() {
 
 
     const percentage =
-        Math.round(
-            (score /
-            questions.length) *
-            100
-        );
+        (denom ? Math.round((score / denom) * 100) : 0);
 
 
     document.getElementById(
@@ -3057,13 +3173,16 @@ function showSummary() {
         );
 
     summaryContent.innerHTML = "";
+    if (finishedEarly && answeredCount === 0) {
+        summaryContent.innerHTML = '<p style="text-align:center;color:#666;margin:20px 0;">No questions were answered in this set.</p>';
+    }
 
 
     let currentSection = "";
 
 
-    questions.forEach(
-        (q, index) => {
+    questions.forEach((q, index) => {
+            if (finishedEarly && !answers[index]) { return; }
 
             const result =
                 answers[index] || {
@@ -3247,51 +3366,7 @@ function escapeHTML(text) {
 ========================================================= */
 
 function restartExercise() {
-
-    currentQuestion = 0;
-
-    score = 0;
-
-    answers = [];
-
-    answered = false;
-
-    draggedConnector = null;
-
-    questions =
-        shuffleArray(
-            originalQuestions
-        ).map(q => {
-
-            const copy =
-                {...q};
-
-            if (copy.options) {
-
-                copy.options =
-                    shuffleArray(
-                        copy.options
-                    );
-            }
-
-            return copy;
-        });
-
-
-    document.getElementById(
-        "summaryScreen"
-    ).classList.add("hidden");
-
-    document.getElementById(
-        "exerciseScreen"
-    ).classList.remove("hidden");
-
-    loadQuestion();
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    startSet(currentSet);
 }
 
 
@@ -3304,7 +3379,40 @@ function savePDF() {
     window.print();
 }
 
-</script>
 
+/* =========================================================
+   BACK TO SETS + FINISH MODAL
+========================================================= */
+
+function backToSets() {
+    closeFinishModal();
+    document.getElementById("summaryScreen").classList.add("hidden");
+    document.getElementById("exerciseScreen").classList.add("hidden");
+    document.getElementById("startScreen").classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openFinishModal() {
+    document.getElementById("finishModal").classList.remove("hidden");
+}
+
+function closeFinishModal() {
+    document.getElementById("finishModal").classList.add("hidden");
+}
+
+function confirmFinish() {
+    closeFinishModal();
+    finishedEarly = true;
+    showSummary();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+        closeFinishModal();
+    }
+});
+
+</script>
 </body>
 </html>
