@@ -801,6 +801,213 @@
     }
 </style>
 
+<style id="dc-signature-2027">
+/* D.C English Classes — Signature 2027
+   Fonte visual: landing/signature-2027.css do portal DC-EnglishClasses.
+   Este CSS também é incorporado diretamente a cada HTML para manter
+   os exercícios independentes e utilizáveis offline. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --navy: #1E3D2F;
+  --blue: #2F694B;
+  --white: #FFFFFF;
+  --light: #F8F9F6;
+  --text: #303936;
+  --green: #2B754F;
+  --red: #B5433B;
+  --gray: #5D6F66;
+  --yellow: #B69A69;
+  --signature-forest: #1E3D2F;
+  --signature-porcelain: #F8F9F6;
+  --signature-champagne: #B69A69;
+  --signature-border: #D2E0D6;
+  --signature-muted: #5D6F66;
+}
+
+html { color-scheme: light; }
+body {
+  font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: radial-gradient(ellipse at 95% 0%, #EBF1EB 0%, transparent 48%),
+              linear-gradient(140deg, #F8F9F6 0%, #EFF3EE 100%);
+  color: var(--text);
+}
+.app { max-width: 980px; padding-top: 36px; }
+header {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 38px;
+  border-radius: 18px;
+  border: 1px solid #315845;
+  background: radial-gradient(ellipse at 90% 5%, #41654A 0%, transparent 48%),
+              linear-gradient(125deg, #163629 0%, #1E3D2F 58%, #102D21 100%);
+  box-shadow: 0 15px 36px #1E3D2F23;
+}
+header::after {
+  content: '';
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  right: -62px;
+  top: -108px;
+  border: 1px solid #B69A694D;
+  border-radius: 50%;
+  pointer-events: none;
+}
+header h1,
+.start-screen h2,
+.summary-header h2,
+.summary-section h3 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -.02em;
+}
+header h1 {
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.17;
+  margin-bottom: 16px;
+  color: #FFFFFF;
+}
+header p.brand {
+  color: #E2EAE3;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+.brand { gap: 12px; }
+.brand-logo {
+  display: inline-block;
+  width: 62px;
+  height: 42px;
+  padding: 7px;
+  background: #F8F9F6;
+  border-radius: 9px;
+  border: 1px solid #FFFFFF5C;
+  object-fit: contain;
+  box-shadow: 0 4px 12px #0B281C20;
+}
+.progress-area,
+.card,
+.modal-box {
+  background: #FFFFFF;
+  border: 1px solid #D2E0D6;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px #1E3D2F0D;
+}
+.progress-top { color: #303936; }
+.progress-bar { background: #E6EEE7; height: 9px; }
+.progress-fill { background: linear-gradient(90deg, #B69A69, #C9B487); }
+.question-type,
+.topic-box {
+  background: #F3EDE2;
+  color: #6A522D;
+  border: 1px solid #E7D9C1;
+  font-weight: 700;
+  letter-spacing: .025em;
+}
+.question-number { color: #2F694B; }
+.question { color: #243B2F; font-weight: 700; }
+.start-screen h2 { color: #1E3D2F; font-size: clamp(28px, 4vw, 36px); }
+.start-screen p { color: #5D6F66; }
+.start-screen p strong { color: #1E3D2F; }
+.info-note {
+  background: #F1F5EF;
+  border-left-color: #B69A69;
+  color: #354C40;
+}
+.option,
+.match-item,
+.drag-option,
+.text-answer {
+  border-color: #CCDCCF;
+  background: #FFFFFF;
+  color: #303936;
+}
+.option:not(.correct):not(.incorrect):hover,
+.match-item:not(.correct):not(.incorrect):hover,
+.drag-option:not(.correct):not(.incorrect):hover {
+  border-color: #8EBAA3;
+  background: #F2F7F2;
+}
+.option.selected:not(.correct):not(.incorrect),
+.match-item.selected:not(.correct):not(.incorrect),
+.match-item.paired:not(.correct):not(.incorrect),
+.drag-option.selected:not(.correct):not(.incorrect) {
+  border-color: #2F694B;
+  background: #E8F1E9;
+  color: #1E3D2F;
+}
+.text-answer:focus { border-color: #2F694B; box-shadow: 0 0 0 3px #8EBAA34D; }
+.drop-zone {
+  border-color: #B69A69;
+  background: #FAF8F3;
+}
+.drop-zone.drag-over { background: #F1E9DA; border-color: #8A7250; }
+.drop-zone.filled { background: #E8F1E9; color: #1E3D2F; border-color: #2F694B; }
+button, .btn-link {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: background-color .2s, box-shadow .2s, transform .15s, opacity .15s;
+}
+.btn-primary { background: #1E3D2F; color: #FFFFFF; }
+.btn-primary:not(:disabled):hover { background: #315B43; box-shadow: 0 6px 18px #1E3D2F1D; }
+.btn-blue { background: #2F694B; color: #FFFFFF; }
+.btn-blue:not(:disabled):hover { background: #215438; }
+.btn-light, .btn-link {
+  background: #ECF2EB;
+  color: #1E3D2F;
+  border: 1px solid #CEDCCF;
+}
+.btn-light:not(:disabled):hover, .btn-link:hover { background: #E3EDE3; }
+.btn-green { background: #2B754F; color: #FFFFFF; }
+.btn-green:not(:disabled):hover { background: #215C3F; }
+.btn-red { background: #B5433B; color: #FFFFFF; }
+.btn-red:not(:disabled):hover { background: #97352F; }
+:where(button, a, input, textarea, select, .option, .match-item, .drag-option):focus-visible {
+  outline: 3px solid #8EBAA3;
+  outline-offset: 3px;
+}
+.score-circle {
+  background: #1E3D2F;
+  border: 5px solid #E8DFD0;
+  box-shadow: 0 8px 22px #1E3D2F19;
+}
+.score-circle small { color: #E7EAE5; }
+.summary-meta strong, .summary-header h2, .summary-section h3 { color: #1E3D2F; }
+.summary-section h3 { border-bottom-color: #D2E0D6; }
+.summary-item { background: #F8F9F6; }
+.summary-answer { color: #566B60; }
+.category-box {
+  background: #F8FAF7;
+  border: 1px solid #D2E0D6;
+}
+.modal-overlay { background: #102D21B8; }
+.modal-box h3 { color: #1E3D2F; }
+.printable-box { border-top-color: #D2E0D6; }
+
+@media (max-width: 650px) {
+  .app { padding: 16px 12px 40px; }
+  header { padding: 26px 23px; }
+  header h1 { font-size: clamp(28px, 8vw, 36px); }
+  .card { padding: 22px; }
+  .brand-logo { width: 54px; height: 38px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+@media print {
+  body { background: #FFFFFF; color: #222222; }
+  .card, .progress-area { box-shadow: none; border-color: transparent; }
+  header, header::after { display: none !important; }
+  .print-logo { width: 74px; height: 50px; padding: 0; background: transparent; border: 0; box-shadow: none; }
+  .print-header { border-bottom-color: #D2E0D6; }
+  .score-circle { box-shadow: none; }
+}
+
+</style>
 </head>
 
 <body>
@@ -809,7 +1016,7 @@
 
 <header>
     <h1>Grammar Exercises</h1>
-    <p class="brand"><img class="brand-logo" src="data:image/png;base64,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" alt="D.C English Classes logo"><span>D.C English Classes</span></p>
+    <p class="brand"><img class="brand-logo" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20473%20313%22%20aria-label%3D%22D.C%20English%20Classes%22%20role%3D%22img%22%3E%3Cpath%20fill%3D%22%231E3D2F%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%2C298%2014%2C300%2016%2C300%20121%2C265%20134%2C270%20147%2C272%20164%2C274%20175%2C274%20190%2C273%20201%2C270%20215%2C266%20228%2C261%20241%2C254%20249%2C247%20262%2C256%20275%2C262%20298%2C270%20314%2C274%20327%2C274%20352%2C272%20372%2C268%20384%2C263%20401%2C254%20414%2C244%20426%2C232%20437%2C219%20444%2C208%20452%2C191%20456%2C180%20458%2C167%20461%2C143%20458%2C120%20456%2C107%20451%2C93%20444%2C79%20436%2C66%20426%2C54%20414%2C43%20401%2C33%20387%2C25%20369%2C18%20352%2C14%20326%2C12%20314%2C13%20290%2C18%20274%2C24%20260%2C32%20250%2C40%20239%2C32%20222%2C23%20198%2C15%20185%2C13%20167%2C12%20149%2C14%20138%2C16%20125%2C20%20111%2C26%2094%2C36%2084%2C44%2073%2C54%2065%2C64%2059%2C73%2049%2C92%2044%2C106%2040%2C124%2039%2C134%2039%2C154%2041%2C169%2044%2C182%2055%2C208%2013%2C295Z%20M330%2C71%20334%2C72%20337%2C76%20338%2C80%20336%2C84%20333%2C87%20330%2C88%20320%2C88%20312%2C90%20303%2C94%20293%2C101%20289%2C104%20280%2C117%20276%2C126%20274%2C134%20274%2C152%20276%2C161%20280%2C170%20288%2C180%20297%2C189%20305%2C194%20312%2C196%20320%2C198%20330%2C199%20332%2C200%20337%2C204%20338%2C207%20337%2C211%20332%2C215%20320%2C215%20307%2C212%20297%2C208%20285%2C200%20277%2C192%20272%2C186%20265%2C176%20260%2C163%20258%2C153%20258%2C134%20260%2C121%20265%2C110%20272%2C100%20282%2C89%20295%2C80%20306%2C75%20318%2C72Z%20M170%2C71%20182%2C72%20194%2C75%20203%2C79%20212%2C85%20220%2C92%20229%2C102%20235%2C112%20239%2C123%20241%2C131%20242%2C142%20241%2C155%20239%2C165%20234%2C177%20227%2C187%20220%2C195%20210%2C203%20203%2C208%20193%2C212%20179%2C215%20166%2C215%20162%2C210%20162%2C204%20165%2C201%20169%2C199%20178%2C198%20187%2C196%20194%2C194%20202%2C189%20208%2C184%20215%2C176%20220%2C168%20223%2C161%20225%2C152%20226%2C143%20225%2C134%20223%2C126%20220%2C118%20216%2C112%20208%2C103%20201%2C97%20190%2C91%20179%2C88%20170%2C88%20166%2C87%20163%2C84%20162%2C82%20162%2C77%20165%2C73Z%22%2F%3E%3C%2Fsvg%3E" alt="D.C English Classes logo"><span>D.C English Classes</span></p>
 </header>
 
 <!-- START SCREEN -->
@@ -933,7 +1140,7 @@
     <div class="card">
 
         <div class="print-header">
-            <img class="brand-logo print-logo" src="data:image/png;base64,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" alt="">
+            <img class="brand-logo print-logo" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20473%20313%22%20aria-label%3D%22D.C%20English%20Classes%22%20role%3D%22img%22%3E%3Cpath%20fill%3D%22%231E3D2F%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%2C298%2014%2C300%2016%2C300%20121%2C265%20134%2C270%20147%2C272%20164%2C274%20175%2C274%20190%2C273%20201%2C270%20215%2C266%20228%2C261%20241%2C254%20249%2C247%20262%2C256%20275%2C262%20298%2C270%20314%2C274%20327%2C274%20352%2C272%20372%2C268%20384%2C263%20401%2C254%20414%2C244%20426%2C232%20437%2C219%20444%2C208%20452%2C191%20456%2C180%20458%2C167%20461%2C143%20458%2C120%20456%2C107%20451%2C93%20444%2C79%20436%2C66%20426%2C54%20414%2C43%20401%2C33%20387%2C25%20369%2C18%20352%2C14%20326%2C12%20314%2C13%20290%2C18%20274%2C24%20260%2C32%20250%2C40%20239%2C32%20222%2C23%20198%2C15%20185%2C13%20167%2C12%20149%2C14%20138%2C16%20125%2C20%20111%2C26%2094%2C36%2084%2C44%2073%2C54%2065%2C64%2059%2C73%2049%2C92%2044%2C106%2040%2C124%2039%2C134%2039%2C154%2041%2C169%2044%2C182%2055%2C208%2013%2C295Z%20M330%2C71%20334%2C72%20337%2C76%20338%2C80%20336%2C84%20333%2C87%20330%2C88%20320%2C88%20312%2C90%20303%2C94%20293%2C101%20289%2C104%20280%2C117%20276%2C126%20274%2C134%20274%2C152%20276%2C161%20280%2C170%20288%2C180%20297%2C189%20305%2C194%20312%2C196%20320%2C198%20330%2C199%20332%2C200%20337%2C204%20338%2C207%20337%2C211%20332%2C215%20320%2C215%20307%2C212%20297%2C208%20285%2C200%20277%2C192%20272%2C186%20265%2C176%20260%2C163%20258%2C153%20258%2C134%20260%2C121%20265%2C110%20272%2C100%20282%2C89%20295%2C80%20306%2C75%20318%2C72Z%20M170%2C71%20182%2C72%20194%2C75%20203%2C79%20212%2C85%20220%2C92%20229%2C102%20235%2C112%20239%2C123%20241%2C131%20242%2C142%20241%2C155%20239%2C165%20234%2C177%20227%2C187%20220%2C195%20210%2C203%20203%2C208%20193%2C212%20179%2C215%20166%2C215%20162%2C210%20162%2C204%20165%2C201%20169%2C199%20178%2C198%20187%2C196%20194%2C194%20202%2C189%20208%2C184%20215%2C176%20220%2C168%20223%2C161%20225%2C152%20226%2C143%20225%2C134%20223%2C126%20220%2C118%20216%2C112%20208%2C103%20201%2C97%20190%2C91%20179%2C88%20170%2C88%20166%2C87%20163%2C84%20162%2C82%20162%2C77%20165%2C73Z%22%2F%3E%3C%2Fsvg%3E" alt="">
             <h1>Grammar Exercises</h1>
             <p>D.C English Classes · General English · B2 · Wishes &amp; regrets – wish / if only<span id="printSet"></span></p>
         </div>
